@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Board : MonoBehaviour
@@ -6,6 +7,16 @@ public class Board : MonoBehaviour
     [SerializeField] private Transform tileParent;
 
     public Tile[] Tiles { get; private set;}
+
+    void Awake()
+    {
+        TouchEvents.OnElementTapped += TileTapped;
+    }
+
+    private void OnDestroy()
+    {
+        TouchEvents.OnElementTapped -= TileTapped;
+    }
 
     void PrepareTiles()
     {
@@ -16,5 +27,10 @@ public class Board : MonoBehaviour
         {
             Tiles[i] = Instantiate(tilePrefab, tileParent);
         }
+    }
+
+    void TileTapped(ITouchable touchable)
+    {
+        var tappedTile = touchable.gameObject.GetComponent<Tile>();
     }
 } 
