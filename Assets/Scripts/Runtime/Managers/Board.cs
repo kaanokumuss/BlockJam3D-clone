@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Tile tilePrefab;
+    [SerializeField] private Transform tileParent;
 
-    // Update is called once per frame
-    void Update()
+    public Tile[] Tiles { get; private set;}
+
+    void PrepareTiles()
     {
-        
+        var tileCount = 5; 
+        Tiles = new Tile[tileCount]; // todo: change with level tile amount 
+
+        for (int i = 0; i < tileCount; i++)
+        {
+            Tiles[i] = Instantiate(tilePrefab, tileParent);
+        }
     }
-}
+} 
