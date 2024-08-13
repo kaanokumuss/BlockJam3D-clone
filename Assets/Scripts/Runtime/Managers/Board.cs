@@ -3,34 +3,35 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    [SerializeField] private Tile tilePrefab;
-    [SerializeField] private Transform tileParent;
+    [SerializeField] private Planet planetPrefab;
+    [SerializeField] private Transform planetParent;
 
-    public Tile[] Tiles { get; private set;}
+    public Planet[] Tiles { get; private set;}
 
     void Awake()
     {
-        TouchEvents.OnElementTapped += TileTapped;
+        TouchEvents.OnElementTapped += PlanetTapped;
+        PreparePlanets();
     }
 
     private void OnDestroy()
     {
-        TouchEvents.OnElementTapped -= TileTapped;
+        TouchEvents.OnElementTapped -= PlanetTapped;
     }
 
-    void PrepareTiles()
+    void PreparePlanets()
     {
-        var tileCount = 5; 
-        Tiles = new Tile[tileCount]; // todo: change with level tile amount 
+        var planetCount = 5; 
+        Tiles = new Planet[planetCount]; // todo: change with level tile amount 
 
-        for (int i = 0; i < tileCount; i++)
+        for (int i = 0; i < planetCount; i++)
         {
-            Tiles[i] = Instantiate(tilePrefab, tileParent);
+            Tiles[i] = Instantiate(planetPrefab, planetParent);
         }
     }
 
-    void TileTapped(ITouchable touchable)
+    void PlanetTapped(ITouchable touchable)
     {
-        var tappedTile = touchable.gameObject.GetComponent<Tile>();
+        var tappedPlanet = touchable.gameObject.GetComponent<Planet>();
     }
 } 
