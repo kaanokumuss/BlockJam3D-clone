@@ -13,6 +13,16 @@ public class LevelManager : MonoBehaviour
     {
         ReadLevels();
         Load();
+        LevelEvents.OnLevelWin += Save_Callback;
+        LevelEvents.OnLevelDataNeeded += LevelDataNeeded_Callback; //leveldata lazim olunca 
+        //LevelEvents.OnLevelSelected += LevelDataNeeded_Callback(); //leveldata lazim olunca 
+        
+    }
+
+    private void OnDestroy()
+    {
+        LevelEvents.OnLevelWin -= Save_Callback;
+        LevelEvents.OnLevelDataNeeded -= LevelDataNeeded_Callback;
     }
 
     void ReadLevels()
@@ -51,7 +61,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void Save(CompleteData completeData)
+    void Save_Callback(CompleteData completeData)
     {
         //bir sonraki leveli aç 
         _levelSaveData.Data[completeData.Index + 1].isUnlocked = true;
@@ -59,6 +69,11 @@ public class LevelManager : MonoBehaviour
         //şuanki levellin yüksek skorunu güncelle
         _levelSaveData.Data[completeData.Index].highScore = completeData.Score;
         DataHandler.Save(_levelSaveData,DataKeys.LevelScoreDataKey);
+    }
+
+    void LevelDataNeeded_Callback()
+    {
+        LevelEvents.OnSpawnLevelSelectionButton?.Invoke(_levelSaveData.Data);
     }
 
 }
