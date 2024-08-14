@@ -3,24 +3,27 @@
   "planets": [
     {
       "id": 0,
-      "position": {
+      "position": 
+      {
         "x": -2,
         "y": 0,
         "z": 99.72000122070312
       },
       "planet": "Earth",
-      "path": "assets/Art/Sprites/Planets/Sprites/Earth.png",
+      "path": "assets/Art/Sprites/Planets/Earth.png",
       "children": [1]
-    },
+    }
+  ,
     {
       "id": 1,
-      "position": {
+      "position": 
+      {
         "x": -1,
         "y": -10,
         "z": 99.80000305175781
       },
       "planet": "Earth",
-      "path": "assets/Art/Sprites/Planets/Sprites/Earth.png",
+      "path": "assets/Art/Sprites/PlanetEarth.png",
       "children": [2]
     },
     {
@@ -31,7 +34,7 @@
         "z": 99.80000305175781
       },
       "planet": "Mars",
-      "path": "assets/Art/Sprites/Planets/Sprites/Mars.png",
+      "path": "assets/Art/Sprites/PlanetsMars.png",
       "children": []
     },
     {
@@ -42,7 +45,7 @@
         "z": 98.83999633789062
       },
       "planet": "Mars",
-      "path": "assets/Art/Sprites/Planets/Sprites/Mars.png",
+      "path": "assets/Art/Sprites/Planets/Mars.png",
       "children": [4]
     },
     {
@@ -53,7 +56,7 @@
         "z": 99.91999816894531
       },
       "planet": "Earth",
-      "path": "assets/Art/Sprites/Planets/Sprites/Earth.png",
+      "path": "assets/Art/Sprites/Planets/Earth.png",
       "children": [5]
     },
     {
@@ -64,7 +67,7 @@
         "z": 98.87999725341797
       },
       "planet": "Mars",
-      "path": "assets/Art/Sprites/Planets/Sprites/Mars.png",
+      "path": "assets/Art/Sprites/Planets/Mars.png",
       "children": []
     }
   ]
