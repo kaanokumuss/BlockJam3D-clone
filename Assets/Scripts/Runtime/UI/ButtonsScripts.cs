@@ -15,7 +15,7 @@ public class ButtonScript : MonoBehaviour
     {
         // Punch efekti için uygun easing ve parametrelerle ayarla
         button.transform.DOPunchScale(Vector3.one * punchScale, punchDuration)
-            .SetEase(Ease.InOutQuad)  // Daha yavaş ve yumuşak bir easing
+            .SetEase(Ease.InOutQuad)  
             .SetLoops(-1, LoopType.Yoyo)  // Yoyo loop ile animasyon tekrarlanır
             .SetId(button.transform);    // Bu buton için bir ID ayarla (gerekirse kullanabilirsin)
     }
