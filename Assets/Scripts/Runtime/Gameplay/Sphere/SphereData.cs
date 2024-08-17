@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public struct PlanetData
+public struct SphereData
 {
     public int id;
     public Vector3 position;
@@ -10,4 +10,3 @@ public struct PlanetData
     public string path;
     public int[] children;
 }
-

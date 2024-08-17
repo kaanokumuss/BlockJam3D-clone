@@ -1,10 +1,8 @@
 [System.Serializable]
-public struct LevelScoresData 
-{
-    //logic barindirmaz class açmamızın sebebi daha optime 
+public struct LevelScoresData {
+    
     public int index;
     public string title;
     public int highScore;
     public bool isUnlocked;
-    // structlarla veri tutuyoruz ..
 }

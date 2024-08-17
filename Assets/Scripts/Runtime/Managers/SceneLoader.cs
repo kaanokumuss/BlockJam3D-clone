@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
@@ -9,37 +8,54 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     [Header("Scene Assets")]
-    [SerializeField] private LevelAssetSO metaSceneAsset;
-    [SerializeField] private LevelAssetSO gameSceneAsset;
+    [SerializeField] LevelAssetSO metaSceneAsset;
+    [SerializeField] LevelAssetSO gameSceneAsset;
 
-    private AsyncOperation _asyncOperation = new();
+    AsyncOperation _asyncOperation = new();
 
     private void Awake()
     {
         HandleFirstLoad();
+
+        SceneEvents.OnLoadGameScene += LoadGameScene;
+        SceneEvents.OnLoadMetaScene += LoadMetaScene;
+    }
+
+    private void OnDestroy()
+    {
+        SceneEvents.OnLoadGameScene -= LoadGameScene;
+        SceneEvents.OnLoadMetaScene -= LoadMetaScene;
     }
 
     void HandleFirstLoad()
     {
         StartCoroutine(LoadSceneAdditive(metaSceneAsset.Asset));
     }
+    
+    [Button]
+    void ReloadGameScene()
+    {
+        StartCoroutine(UnloadActiveSceneThenLoadScene(SceneManager.GetActiveScene().name));
+    }
+    
     [Button]
     void LoadGameScene()
     {
         StartCoroutine(UnloadActiveSceneThenLoadScene(gameSceneAsset.Asset));
     }
+
     [Button]
     void LoadMetaScene()
     {
         StartCoroutine(UnloadActiveSceneThenLoadScene(metaSceneAsset.Asset));
     }
-    
+
     IEnumerator UnloadActiveSceneThenLoadScene(string sceneName)
     {
-        yield return UnloadSceneAdditive(SceneManager.GetActiveScene().name);
+        yield return UnlaodSceneAdditive(SceneManager.GetActiveScene().name);
         yield return LoadSceneAdditive(sceneName);
     }
-    
+
     IEnumerator LoadSceneAdditive(string sceneName)
     {
         _asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -50,9 +66,10 @@ public class SceneLoader : MonoBehaviour
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
     }
 
-    IEnumerator UnloadSceneAdditive(string sceneName)
+    IEnumerator UnlaodSceneAdditive(string sceneName)
     {
         _asyncOperation = SceneManager.UnloadSceneAsync(sceneName);
-        yield return new WaitUntil(()=>_asyncOperation.isDone);
+
+        yield return new WaitUntil(()=> _asyncOperation.isDone);
     }
 }

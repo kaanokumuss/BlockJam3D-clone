@@ -6,4 +6,4 @@ public struct LevelSaveData
     {
         Data = data;
     }
-}
+}   

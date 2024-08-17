@@ -1,0 +1,38 @@
+{
+  "title": "Level2",
+  "planets": [
+    {
+      "id": 0,
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": 100
+      },
+      "planet": "Earth",
+      "path": "assets/Art/Sprites/Planets/Earth.png",
+      "children": [1, 2]
+    },
+    {
+      "id": 1,
+      "position": {
+        "x": -3,
+        "y": -10,
+        "z": 100
+      },
+      "planet": "Mars",
+      "path": "assets/Art/Sprites/Planets/Mars.png",
+      "children": []
+    },
+    {
+      "id": 2,
+      "position": {
+        "x": -2,
+        "y": -10,
+        "z": 99
+      },
+      "planet": "Earth",
+      "path": "assets/Art/Sprites/Planets/Earth.png",
+      "children": []
+    }
+  ]
+}
