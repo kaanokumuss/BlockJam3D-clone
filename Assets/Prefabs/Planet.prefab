@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7350157718270089279}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.93420124, y: 1, z: 4.7044983}
+  m_LocalPosition: {x: 20.39, y: 1, z: 4.7044983}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -119,5 +119,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Index: 0
-  Color: {r: 0, g: 0, b: 0, a: 0}
-  SphereObject: {fileID: 0}
+  Material: {fileID: 2100000, guid: 60590c38e57f0ba408e9575a6f55d941, type: 2}
+  SphereObject: {fileID: 7350157718270089279}

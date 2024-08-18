@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class SphereSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject spherePrefab;
     public GridCreator gridCreator;
-    public SphereColorMixer colorAssigner; 
+    public SphereMaterialMixer materialAssigner; // ismi değiştirilmiş
 
     private void Start()
     {
@@ -16,7 +15,7 @@ public class SphereSpawner : MonoBehaviour
 
     void SpawnSphere()
     {
-        if (gridCreator == null || gridCreator.tiles == null || spherePrefab == null || colorAssigner == null)
+        if (gridCreator == null || gridCreator.tiles == null || spherePrefab == null || materialAssigner == null)
         {
             Debug.LogWarning("Missing references!");
             return;
@@ -26,8 +25,10 @@ public class SphereSpawner : MonoBehaviour
         {
             Vector3 newPosition = gridCreator.tiles[i].position;
             newPosition.y += 3f;
+            Debug.Log("Sphere will spawn at: " + newPosition); // Pozisyonu loglayın
             GameObject sphere = Instantiate(spherePrefab, newPosition, Quaternion.identity);
-            colorAssigner.RandomColor(sphere);
+            materialAssigner.AssignMaterial(sphere); // Material atama
         }
     }
+
 }

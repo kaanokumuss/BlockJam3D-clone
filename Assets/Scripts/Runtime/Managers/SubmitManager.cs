@@ -27,13 +27,13 @@ public class SubmitManager : MonoBehaviour
 
         GameObject touchedSphere = touchedElement.gameObject;
         Renderer renderer = touchedSphere.GetComponent<Renderer>();
-        Color sphereColor = renderer.material.color;
+        Material sphereMaterial = renderer.material;
 
-        int targetIndex = GetAvailableIndexForColor(sphereColor);
+        int targetIndex = GetAvailableIndexForMaterial(sphereMaterial);
 
         if (targetIndex >= 0)
         {
-            MoveSphereToPosition(touchedSphere, targetIndex, sphereColor);
+            MoveSphereToPosition(touchedSphere, targetIndex, sphereMaterial);
         }
         else
         {
@@ -41,40 +41,55 @@ public class SubmitManager : MonoBehaviour
             isCheckingForMatch = false;
         }
     }
-
-    void MoveSphereToPosition(GameObject sphere, int targetIndex, Color color)
+    
+    void MoveSphereToPosition(GameObject sphere, int targetIndex, Material material)
     {
         Vector3 newPosition = submitPositions[targetIndex].position;
         newPosition.y += 0.46f;
+
         sphere.GetComponent<Sphere>().MoveTo(newPosition).OnComplete(() =>
         {
-            UpdateSphereInfo(sphere, targetIndex, color); matchManager.CheckForMatchingColors();
+            UpdateSphereInfo(sphere, targetIndex, material);
+            // Eşleşmeleri kontrol et
+            matchManager.CheckForMatchingMaterials();
             isCheckingForMatch = false; // Hareket tamamlandığında tıklama tekrar aktif
         });
     }
 
-    void UpdateSphereInfo(GameObject sphere, int index, Color color)
+
+   // void MoveSphereToPosition(GameObject sphere, int targetIndex, Material material)
+   // {
+   //     Vector3 newPosition = submitPositions[targetIndex].position;
+   //     newPosition.y += 0.46f;
+   //     sphere.GetComponent<Sphere>().MoveTo(newPosition).OnComplete(() =>
+   //     {
+   //         UpdateSphereInfo(sphere, targetIndex, material); matchManager.CheckForMatchingMaterials();
+   //         isCheckingForMatch = false; // Hareket tamamlandığında tıklama tekrar aktif
+   //     });
+   // }
+
+    void UpdateSphereInfo(GameObject sphere, int index, Material material)
     {
         sphereInfos.RemoveAll(info => info.SphereObject == sphere);
-        sphereInfos.Add(new Sphere { Index = index, Color = color, SphereObject = sphere });
+        sphereInfos.Add(new Sphere { Index = index, Material = material, SphereObject = sphere });
     }
-
-    int GetAvailableIndexForColor(Color color)
+    int GetAvailableIndexForMaterial(Material material)
     {
         // Aynı renkteki küplerin bulunduğu mevcut indeksleri bul
-        List<int> sameColorIndices = new List<int>();
+        List<int> sameMaterialIndices = new List<int>();
         foreach (var info in sphereInfos)
         {
-            if (info.Color == color)
+            if (info.Material.name == material.name)
             {
-                sameColorIndices.Add(info.Index);
+                sameMaterialIndices.Add(info.Index);
             }
         }
 
-        if (sameColorIndices.Count > 0)
+
+        if (sameMaterialIndices.Count > 0)
         {
-            int lastSameColorIndex = sameColorIndices[sameColorIndices.Count - 1];
-            int nextIndex = lastSameColorIndex + 1;
+            int lastSameMaterialIndex = sameMaterialIndices[sameMaterialIndices.Count - 1];
+            int nextIndex = lastSameMaterialIndex + 1;
 
             if (IsPositionAvailable(nextIndex))
             {
@@ -99,11 +114,13 @@ public class SubmitManager : MonoBehaviour
         return -1; // Uygun pozisyon yok
     }
 
+
+    
+
     bool IsPositionAvailable(int index)
     {
         return index >= 0 && index < submitPositions.Length && !sphereInfos.Exists(info => info.Index == index);
     }
-
     void ShiftSpheresRight(int startIndex)
     {
         for (int i = sphereInfos.Count - 1; i >= 0; i--)
@@ -111,7 +128,7 @@ public class SubmitManager : MonoBehaviour
             if (sphereInfos[i].Index >= startIndex)
             {
                 int newIndex = sphereInfos[i].Index + 1;
-                if (IsPositionAvailable(newIndex))  
+                if (IsPositionAvailable(newIndex))
                 {
                     Vector3 newPosition = submitPositions[newIndex].position;
                     newPosition.y += 0.46f;
@@ -120,10 +137,33 @@ public class SubmitManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("No more space to shift cubes right!");
+                    Debug.LogError("No more space to shift spheres right!");
                     break;
                 }
             }
         }
     }
+
+    // void ShiftSpheresRight(int startIndex)
+    // {
+    //     for (int i = sphereInfos.Count - 1; i >= 0; i--)
+    //     {
+    //         if (sphereInfos[i].Index >= startIndex)
+    //         {
+    //             int newIndex = sphereInfos[i].Index + 1;
+    //             if (IsPositionAvailable(newIndex))  
+    //             {
+    //                 Vector3 newPosition = submitPositions[newIndex].position;
+    //                 newPosition.y += 0.46f;
+    //                 sphereInfos[i].SphereObject.GetComponent<Sphere>().MoveTo(newPosition);
+    //                 sphereInfos[i].Index = newIndex;
+    //             }
+    //             else
+    //             {
+    //                 Debug.LogError("No more space to shift cubes right!");
+    //                 break;
+    //             }
+    //         }
+    //     }
+    // }
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class GridCreator : MonoBehaviour
 {
@@ -9,6 +8,7 @@ public class GridCreator : MonoBehaviour
     [SerializeField] private int columns = 3;
     [SerializeField] private float spacing = 2f;
     public Transform[] tiles;
+    private GameObject instance;
 
     void Awake()
     {
@@ -17,7 +17,6 @@ public class GridCreator : MonoBehaviour
 
     void CreateGrid()
     {
-      
         tiles = new Transform[rows * columns];
         int index = 0;
 
@@ -25,15 +24,23 @@ public class GridCreator : MonoBehaviour
         {
             for (int column = 0; column < columns; column++)
             {
-                GameObject instance = Instantiate(prefabTile, tilesParent);
+                // Yeni bir tile oluştur
+                instance = Instantiate(prefabTile, tilesParent);
+
+                // Pozisyon hesapla ve uygula
                 float xPosition = column * spacing;
                 float zPosition = row * spacing;
-                instance.transform.position = new Vector3(xPosition, 0.01f, zPosition);
+                float yPosition = 0; // veya istediğiniz başka bir değer
+
+                // Tile'ın pozisyonunu ayarla
+                instance.transform.localPosition = new Vector3(xPosition, yPosition, zPosition);
+
+                // Transform referansını sakla
                 tiles[index] = instance.transform;
+
+                Debug.Log("Tile at index " + index + " position: " + instance.transform.position); // Pozisyonları logla
                 index++;
             }
         }
     }
 }
-
-
