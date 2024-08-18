@@ -5,12 +5,10 @@ using UnityEngine.Serialization;
 
 public class SubmitManager : MonoBehaviour
 {
+    [SerializeField] MatchManager matchManager;
     [SerializeField] public Transform[] submitPositions;
-    [SerializeField] public int requiredCount = 3; // Aynı renkli küplerin yan yana gelme sayısı
-
     public   List<Sphere> sphereInfos = new List<Sphere>();
     public bool isCheckingForMatch = false;
-    
     void OnEnable()
     {
         TouchEvents.OnElementTapped += HandleElementTapped;
@@ -50,7 +48,7 @@ public class SubmitManager : MonoBehaviour
         newPosition.y += 0.46f;
         sphere.GetComponent<Sphere>().MoveTo(newPosition).OnComplete(() =>
         {
-            UpdateSphereInfo(sphere, targetIndex, color); CheckForMatchingColors();
+            UpdateSphereInfo(sphere, targetIndex, color); matchManager.CheckForMatchingColors();
             isCheckingForMatch = false; // Hareket tamamlandığında tıklama tekrar aktif
         });
     }
@@ -126,69 +124,6 @@ public class SubmitManager : MonoBehaviour
                     break;
                 }
             }
-        }
-    }
-    
-    void CheckForMatchingColors()
-    {
-        isCheckingForMatch = true;
-   
-        Dictionary<Color, List<GameObject>> colorGroups = new Dictionary<Color, List<GameObject>>();
-        foreach (var info in sphereInfos)
-        {
-            if (!colorGroups.ContainsKey(info.Color))
-            {
-                colorGroups[info.Color] = new List<GameObject>();
-            }
-            colorGroups[info.Color].Add(info.SphereObject);
-        }
-   
-        foreach (var colorGroup in colorGroups)
-        {
-            if (colorGroup.Value.Count >= requiredCount)
-            {
-                Sequence sequence = DOTween.Sequence();
-                foreach (var SphereObject in colorGroup.Value)
-                {
-                    sequence.Join(SphereObject.transform.DOScale(Vector3.zero, 0.5f));
-                }
-   
-                sequence.OnComplete(() =>
-                {
-                    RemoveMatchingSpheres(colorGroup.Key);
-                    RearrangeSpheres();
-                    isCheckingForMatch = false;
-                });
-   
-                sequence.Play();
-                return;
-            }
-        }
-   
-        isCheckingForMatch = false;
-    }
-   
-    void RemoveMatchingSpheres(Color color)
-    {
-        for (int i = sphereInfos.Count - 1; i >= 0; i--)
-        {
-            if (sphereInfos[i].Color == color)
-            {
-                Destroy(sphereInfos[i].SphereObject);
-                sphereInfos.RemoveAt(i);
-            }
-        }
-    }
-    void RearrangeSpheres()
-    {
-        sphereInfos.Sort((a, b) => a.Index.CompareTo(b.Index));
-   
-        for (int i = 0; i < sphereInfos.Count; i++)
-        {
-            sphereInfos[i].Index = i;
-            Vector3 newPosition =submitPositions[i].position;
-            newPosition.y += 0.46f;
-            sphereInfos[i].SphereObject.GetComponent<Sphere>().MoveTo(newPosition);
         }
     }
 }

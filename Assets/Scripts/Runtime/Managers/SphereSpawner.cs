@@ -25,7 +25,7 @@ public class SphereSpawner : MonoBehaviour
         for (int i = 0; i < gridCreator.tiles.Length; i++)
         {
             Vector3 newPosition = gridCreator.tiles[i].position;
-            newPosition.y += 0.46f;
+            newPosition.y += 3f;
             GameObject sphere = Instantiate(spherePrefab, newPosition, Quaternion.identity);
             colorAssigner.RandomColor(sphere);
         }
