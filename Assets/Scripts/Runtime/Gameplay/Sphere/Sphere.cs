@@ -10,6 +10,9 @@ public class Sphere : MonoBehaviour, ITouchable
 
     private float rotationDuration = 20f; // Dönüş süresi (saniye cinsinden)
     private Vector3 rotationAxis = Vector3.up; // Dönme ekseni (Y ekseni)
+    
+    // Kürelerin önceki pozisyonunu saklamak için alan
+    public Vector3 PreviousPosition { get; private set; }
 
     private void Start()
     {
@@ -18,7 +21,15 @@ public class Sphere : MonoBehaviour, ITouchable
 
     public Tween MoveTo(Vector3 targetPosition)
     {
-        return transform.DOMove(targetPosition, 1f).SetEase(Ease.InOutQuad);
+        // Eski pozisyonu kaydet
+        PreviousPosition = transform.position;
+        return transform.DOMove(targetPosition,0.5f).SetEase(Ease.InOutQuad);
+    }
+
+    // Küreyi önceki pozisyonuna geri döndüren metod
+    public Tween MoveBack()
+    {
+        return transform.DOMove(PreviousPosition, 1f).SetEase(Ease.InOutQuad);
     }
 
     private void RotateSphere()

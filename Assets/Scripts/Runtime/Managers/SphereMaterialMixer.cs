@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class SphereMaterialMixer : MonoBehaviour
 {
-    [SerializeField] public Material[] sphereMaterials; // Farklı material'ları buraya ekle
-    // Veya sprite kullanıyorsan:
-    // [SerializeField] private Sprite[] sphereSprites;
+    [SerializeField] public Material[] sphereMaterials; 
 
     public void AssignMaterial(GameObject sphere)
     {
@@ -18,14 +16,5 @@ public class SphereMaterialMixer : MonoBehaviour
         }
     }
 
-    // Eğer SpriteRenderer kullanıyorsan:
-    // public void AssignSprite(GameObject sphere)
-    // {
-    //     SpriteRenderer spriteRenderer = sphere.GetComponent<SpriteRenderer>();
-    //     if (spriteRenderer != null && sphereSprites.Length > 0)
-    //     {
-    //         int randomIndex = Random.Range(0, sphereSprites.Length);
-    //         spriteRenderer.sprite = sphereSprites[randomIndex];
-    //     }
-    // }
+    
 }

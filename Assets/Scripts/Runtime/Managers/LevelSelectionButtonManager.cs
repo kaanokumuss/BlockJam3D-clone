@@ -24,7 +24,7 @@ namespace Runtime.Managers
         {
             _buttons = new LevelSelectionButton[data.Length];
 
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i <= data.Length; i++)  //sorun burdaymiş 
             {
                 _buttons[i] = Instantiate(prefab, spawnParent);
                 _buttons[i].Prepare(data[i]);

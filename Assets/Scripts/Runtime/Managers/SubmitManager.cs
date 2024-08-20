@@ -1,14 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class SubmitManager : MonoBehaviour
 {
     [SerializeField] MatchManager matchManager;
     [SerializeField] public Transform[] submitPositions;
-    public   List<Sphere> sphereInfos = new List<Sphere>();
+    [SerializeField] private Button undoButton;
+    public List<Sphere> sphereInfos = new List<Sphere>();
     public bool isCheckingForMatch = false;
+    private Stack<Sphere> undoStack = new Stack<Sphere>(); 
+
     void OnEnable()
     {
         TouchEvents.OnElementTapped += HandleElementTapped;
@@ -41,41 +44,32 @@ public class SubmitManager : MonoBehaviour
             isCheckingForMatch = false;
         }
     }
-    
+
     void MoveSphereToPosition(GameObject sphere, int targetIndex, Material material)
     {
         Vector3 newPosition = submitPositions[targetIndex].position;
         newPosition.y += 0.46f;
-
+        // var spphere gget comp yaz
+        
         sphere.GetComponent<Sphere>().MoveTo(newPosition).OnComplete(() =>
         {
+            // Sphere nesnesini undo için sakla
+            undoStack.Push(sphere.GetComponent<Sphere>());
+
             UpdateSphereInfo(sphere, targetIndex, material);
-            // Eşleşmeleri kontrol et
             matchManager.CheckForMatchingMaterials();
-            isCheckingForMatch = false; // Hareket tamamlandığında tıklama tekrar aktif
+            isCheckingForMatch = false;
         });
     }
-
-
-   // void MoveSphereToPosition(GameObject sphere, int targetIndex, Material material)
-   // {
-   //     Vector3 newPosition = submitPositions[targetIndex].position;
-   //     newPosition.y += 0.46f;
-   //     sphere.GetComponent<Sphere>().MoveTo(newPosition).OnComplete(() =>
-   //     {
-   //         UpdateSphereInfo(sphere, targetIndex, material); matchManager.CheckForMatchingMaterials();
-   //         isCheckingForMatch = false; // Hareket tamamlandığında tıklama tekrar aktif
-   //     });
-   // }
 
     void UpdateSphereInfo(GameObject sphere, int index, Material material)
     {
         sphereInfos.RemoveAll(info => info.SphereObject == sphere);
         sphereInfos.Add(new Sphere { Index = index, Material = material, SphereObject = sphere });
     }
+
     int GetAvailableIndexForMaterial(Material material)
     {
-        // Aynı renkteki küplerin bulunduğu mevcut indeksleri bul
         List<int> sameMaterialIndices = new List<int>();
         foreach (var info in sphereInfos)
         {
@@ -84,7 +78,6 @@ public class SubmitManager : MonoBehaviour
                 sameMaterialIndices.Add(info.Index);
             }
         }
-
 
         if (sameMaterialIndices.Count > 0)
         {
@@ -102,7 +95,6 @@ public class SubmitManager : MonoBehaviour
             }
         }
 
-        // Eğer aynı renkten bir küp yoksa, ilk boş pozisyonu bul
         for (int i = 0; i < submitPositions.Length; i++)
         {
             if (IsPositionAvailable(i))
@@ -111,16 +103,14 @@ public class SubmitManager : MonoBehaviour
             }
         }
 
-        return -1; // Uygun pozisyon yok
+        return -1;
     }
-
-
-    
 
     bool IsPositionAvailable(int index)
     {
         return index >= 0 && index < submitPositions.Length && !sphereInfos.Exists(info => info.Index == index);
     }
+
     void ShiftSpheresRight(int startIndex)
     {
         for (int i = sphereInfos.Count - 1; i >= 0; i--)
@@ -132,7 +122,7 @@ public class SubmitManager : MonoBehaviour
                 {
                     Vector3 newPosition = submitPositions[newIndex].position;
                     newPosition.y += 0.46f;
-                    sphereInfos[i].SphereObject.GetComponent<Sphere>().MoveTo(newPosition);
+                    sphereInfos[i].MoveTo(newPosition);
                     sphereInfos[i].Index = newIndex;
                 }
                 else
@@ -144,26 +134,21 @@ public class SubmitManager : MonoBehaviour
         }
     }
 
-    // void ShiftSpheresRight(int startIndex)
-    // {
-    //     for (int i = sphereInfos.Count - 1; i >= 0; i--)
-    //     {
-    //         if (sphereInfos[i].Index >= startIndex)
-    //         {
-    //             int newIndex = sphereInfos[i].Index + 1;
-    //             if (IsPositionAvailable(newIndex))  
-    //             {
-    //                 Vector3 newPosition = submitPositions[newIndex].position;
-    //                 newPosition.y += 0.46f;
-    //                 sphereInfos[i].SphereObject.GetComponent<Sphere>().MoveTo(newPosition);
-    //                 sphereInfos[i].Index = newIndex;
-    //             }
-    //             else
-    //             {
-    //                 Debug.LogError("No more space to shift cubes right!");
-    //                 break;
-    //             }
-    //         }
-    //     }
-    // }
+    // Undo işlemi için yeni bir fonksiyon ekleyelim
+    public void UndoLastMove()
+    {
+        if (undoStack.Count > 0)
+        {
+            Sphere lastMovedSphere = undoStack.Pop();
+            Debug.Log("Popped");
+
+            // Sphere'i undo işlemi için geri taşı
+            lastMovedSphere.MoveBack().OnComplete(() =>
+            {
+                // Sphere'in info listesinden çıkarılması
+                sphereInfos.RemoveAll(info => info.SphereObject == lastMovedSphere.gameObject);
+                isCheckingForMatch = false;
+            });
+        }
+    }
 }

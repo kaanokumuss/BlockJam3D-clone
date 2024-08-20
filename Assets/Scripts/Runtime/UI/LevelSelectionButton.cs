@@ -14,7 +14,7 @@ public class LevelSelectionButton : MonoBehaviour
     {
         playButton.interactable = data.isUnlocked;
         _index = data.index;
-        Debug.Log($"Prepared");
+        Debug.Log("Prepared");
         UpdateSprite(data.isUnlocked);
         UpdateInfoText(data);
     }
