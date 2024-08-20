@@ -1,7 +1,5 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.PlayerLoop; // TextMeshPro'yu kullanmak için gerekli
-
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreText; // TMP_Text türünde TextMeshPro referansı
