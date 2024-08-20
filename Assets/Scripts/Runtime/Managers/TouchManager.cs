@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
 public class TouchManager : MonoBehaviour
 {
     [SerializeField] Camera cam;

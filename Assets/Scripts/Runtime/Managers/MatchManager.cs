@@ -6,6 +6,7 @@ using DG.Tweening;
 public class MatchManager : MonoBehaviour
 {
     [SerializeField] SubmitManager submitManager;
+    [SerializeField] private SphereMoveController sphereMoveController;
 
     private int requiredCount = 3;
     public void CheckForMatchingMaterials()
@@ -23,17 +24,7 @@ public class MatchManager : MonoBehaviour
             }
             materialGroups[materialName].Add(info.SphereObject);
         }
-
-        // Materyalleri ve ilgili oyun nesnelerini yazdır
-        foreach (var materialGroup in materialGroups)
-        {
-            Debug.Log($"Material: {materialGroup.Key}, Count: {materialGroup.Value.Count}");
-            foreach (var sphereObject in materialGroup.Value)
-            {
-                Debug.Log($" - Sphere Object: {sphereObject.name}");
-            }
-        }
-
+        
         foreach (var materialGroup in materialGroups)
         {
             if (materialGroup.Value.Count >= requiredCount)
@@ -47,6 +38,7 @@ public class MatchManager : MonoBehaviour
                 sequence.OnComplete(() =>
                 {
                     RemoveMatchingSpheres(materialGroup.Key);
+                    ScoreEvents.OnDestroyedSphere?.Invoke();
                     RearrangeSpheres();
                     submitManager.isCheckingForMatch = false;
                 });
@@ -69,10 +61,8 @@ public class MatchManager : MonoBehaviour
                 submitManager.sphereInfos.RemoveAt(i);
             }
         }
-    }
-
-   
-    
+        
+    } 
     void RearrangeSpheres()
     {
         submitManager.sphereInfos.Sort((a, b) => a.Index.CompareTo(b.Index));
@@ -85,5 +75,46 @@ public class MatchManager : MonoBehaviour
             submitManager.sphereInfos[i].SphereObject.GetComponent<Sphere>().MoveTo(newPosition);
         }
     } 
+    public bool IsPositionAvailable(int index)
+    {
+        return index >= 0 && index < submitManager.submitPositions.Length && !submitManager.sphereInfos.Exists(info => info.Index == index);
+    }
+    public int GetAvailableIndexForMaterial(Material material)
+    {
+        List<int> sameMaterialIndices = new List<int>();
+        foreach (var info in submitManager.sphereInfos)
+        {
+            if (info.Material.name == material.name)
+            {
+                sameMaterialIndices.Add(info.Index);
+            }
+        }
+
+        if (sameMaterialIndices.Count > 0)
+        {
+            int lastSameMaterialIndex = sameMaterialIndices[sameMaterialIndices.Count - 1];
+            int nextIndex = lastSameMaterialIndex + 1;
+
+            if (IsPositionAvailable(nextIndex))
+            {
+                return nextIndex;
+            }
+            else
+            {
+                sphereMoveController.ShiftSpheresRight(nextIndex);
+                return nextIndex;
+            }
+        }
+
+        for (int i = 0; i < submitManager.submitPositions.Length; i++)
+        {
+            if (IsPositionAvailable(i))
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }
 

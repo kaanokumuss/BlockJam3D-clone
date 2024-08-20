@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UndoButton : MonoBehaviour
 {
@@ -18,6 +19,24 @@ public class UndoButton : MonoBehaviour
 
     void OnClick()
     {
-        submitManager.UndoLastMove(); 
+        UndoLastMove(); 
+        ScoreEvents.OnTappedUndoButton?.Invoke();
+
     }
+    public void UndoLastMove()
+    {
+        if (submitManager.undoStack.Count > 0)
+        {
+            Sphere lastMovedSphere = submitManager.undoStack.Pop();
+            Debug.Log("Popped");
+
+            // Sphere'i undo işlemi için geri taşı
+            lastMovedSphere.MoveBack().OnComplete(() =>
+            {
+                // Sphere'in info listesinden çıkarılması
+                submitManager.sphereInfos.RemoveAll(info => info.SphereObject == lastMovedSphere.gameObject);
+                submitManager.isCheckingForMatch = false;
+            });
+        }
+    } 
 }

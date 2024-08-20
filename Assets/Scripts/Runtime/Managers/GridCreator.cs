@@ -38,7 +38,7 @@ public class GridCreator : MonoBehaviour
                 // Transform referansını sakla
                 tiles[index] = instance.transform;
 
-                Debug.Log("Tile at index " + index + " position: " + instance.transform.position); // Pozisyonları logla
+               // Debug.Log("Tile at index " + index + " position: " + instance.transform.position); // Pozisyonları logla
                 index++;
             }
         }

@@ -18,7 +18,7 @@ public class SphereSpawner : MonoBehaviour
     {
         if (gridCreator == null || gridCreator.tiles == null || spherePrefab == null || materialAssigner == null)
         {
-            Debug.LogWarning("Missing references!");
+            // Debug.LogWarning("Missing references!");
             return;
         }
 
@@ -26,7 +26,7 @@ public class SphereSpawner : MonoBehaviour
         {
             Vector3 newPosition = gridCreator.tiles[i].position;
             newPosition.y += 0.1f;
-            Debug.Log("Sphere will spawn at: " + newPosition); // Pozisyonu loglayın
+          //  Debug.Log("Sphere will spawn at: " + newPosition); // Pozisyonu loglayın
             GameObject sphere = Instantiate(spherePrefab, newPosition, Quaternion.identity, sphereParent);
             materialAssigner.AssignMaterial(sphere); // Material atama
         }
