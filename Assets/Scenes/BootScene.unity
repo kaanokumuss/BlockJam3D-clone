@@ -230,9 +230,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a667b0c6f615b5b4e92e5415f75efc26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LevelSelectionSO: {fileID: 11400000, guid: a6f6e71dff80df749afcde90522835e9, type: 2}
   levelFiles:
   - {fileID: 4900000, guid: c6e062203cd4f724fb1cc26ab6877f1a, type: 3}
-  - {fileID: 4900000, guid: 69a892b9f84a7e34cae75a2a216c267a, type: 3}
+  - {fileID: 4900000, guid: 8f8a941be8604694884260ea7a78eaab, type: 3}
+  - {fileID: 4900000, guid: 86a936383c0746a42b732b6c087b733f, type: 3}
+  - {fileID: 4900000, guid: 2140b99bcb3f06b4f96e08e405bebf5f, type: 3}
+  - {fileID: 4900000, guid: 13d805cc64d71d74aad966cdd4ee7bc7, type: 3}
 --- !u!4 &1618178121
 Transform:
   m_ObjectHideFlags: 0

@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 874d7238bbe80d1429733f6f07833634, type: 3}
-  m_Name: GameSceneAsset
+  m_Script: {fileID: 11500000, guid: 0fcc8362d79eabe4d94e32374adaf0ea, type: 3}
+  m_Name: LevelSelection
   m_EditorClassIdentifier: 
-  ID: 
-  Asset:
-    sceneAsset: {fileID: 102900000, guid: c42b17b6ce521274ab9873f3e05eea8a, type: 3}
-    sceneName: GameScene
+  levelIndex: 0
+  score: 0
+  levelData:
+    title: 
+    planets: []

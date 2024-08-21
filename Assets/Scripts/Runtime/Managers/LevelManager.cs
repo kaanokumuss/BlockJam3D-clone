@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < levelFiles.Length; i++)
         {
             _levelData[i] = JsonUtility.FromJson<LevelData>(levelFiles[i].text);
-            Debug.Log($"Level {i} read successfully: {_levelData[i].title}");
+          //  Debug.Log($"Level {i} read successfully: {_levelData[i].title}");
         }
     }
 

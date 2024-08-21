@@ -24,7 +24,7 @@ public class LevelSelectionButton : MonoBehaviour
     {
         playButton.interactable = data.isUnlocked;
         _index = data.index;
-        Debug.Log("Prepared");
+        // Debug.Log("Prepared");
         UpdateSprite(data.isUnlocked);
         UpdateInfoText(data);
     }
@@ -34,7 +34,7 @@ public class LevelSelectionButton : MonoBehaviour
         
         lockIcon.SetActive(!isUnlocked);
         playText.SetActive(isUnlocked);
-        Debug.Log($"Set Lock or Play");
+       // Debug.Log($"Set Lock or Play");
     }
 
     void UpdateInfoText(LevelScoresData data)
