@@ -5,69 +5,135 @@
       "id": 0,
       "position": 
       {
-        "x": -2,
-        "y": 0,
-        "z": 99.72000122070312
+        "x": 7.73,
+        "y": 10.11,
+        "z": 44.68
       },
-      "planet": "Earth",
-      "path": "assets/Art/Sprites/Planets/Earth.png",
-      "children": [1]
+      "planet": "Moon",
+      "material": "Moon",
+      "children": [3,6,9]
     }
   ,
     {
       "id": 1,
       "position": 
       {
-        "x": -1,
-        "y": -10,
-        "z": 99.80000305175781
+        "x": 10.73,
+        "y": 10.11,
+        "z": 44.68
       },
-      "planet": "Earth",
-      "path": "assets/Art/Sprites/PlanetEarth.png",
-      "children": [2]
+      "planet": "Jupiter",
+      "material": "Jupiter",
+      "children": [4, 7 ,10]
     },
     {
       "id": 2,
       "position": {
-        "x": -1,
-        "y": -20,
-        "z": 99.80000305175781
+        "x": 13.73,
+        "y": 10.11,
+        "z": 44.68
       },
-      "planet": "Mars",
-      "path": "assets/Art/Sprites/PlanetsMars.png",
-      "children": []
+      "planet": "Moon",
+      "material": "Moon",
+      "children": [5, 8, 11]
     },
     {
       "id": 3,
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": 98.83999633789062
+        "x": 7.73,
+        "y": 10.11,
+        "z": 47.68
       },
-      "planet": "Mars",
-      "path": "assets/Art/Sprites/Planets/Mars.png",
-      "children": [4]
+      "planet": "Earth",
+      "material": "Earth",
+      "children": [6,9]
     },
     {
       "id": 4,
       "position": {
-        "x": 1,
-        "y": -10,
-        "z": 99.91999816894531
+        "x": 10.73,
+        "y": 10.11,
+        "z": 47.68
       },
       "planet": "Earth",
-      "path": "assets/Art/Sprites/Planets/Earth.png",
-      "children": [5]
+      "material": "Earth",
+      "children": [7,10]
     },
     {
       "id": 5,
       "position": {
-        "x": 1,
-        "y": -20,
-        "z": 98.87999725341797
+        "x": 13.73,
+        "y": 10.11,
+        "z": 47.68
       },
-      "planet": "Mars",
-      "path": "assets/Art/Sprites/Planets/Mars.png",
+      "planet": " Jupiter",
+      "material": "Jupiter",
+      "children": [8,11]
+    },
+    {
+      "id": 6,
+      "position": {
+        "x": 7.73,
+        "y": 10.11,
+        "z": 50.68
+      },
+      "planet": "Pluto",
+      "material": "Pluto",
+      "children": [9]
+    },
+    {
+      "id": 7,
+      "position": {
+        "x": 7.73,
+        "y": 10.11,
+        "z": 50.68
+      },
+      "planet": "Pluto",
+      "material": "Pluto",
+      "children": [10]
+    },
+    {
+      "id": 8,
+      "position": {
+        "x": 7.73,
+        "y": 10.11,
+        "z": 50.68
+      },
+      "planet": "Jupiter",
+      "material": "Jupiter",
+      "children": [11]
+    },
+    {
+      "id": 9,
+      "position": {
+        "x": 7.73,
+        "y": 10.11,
+        "z": 50.68
+      },
+      "planet": " Moon",
+      "material": "Moon",
+      "children": []
+    },
+    {
+      "id": 10,
+      "position": {
+        "x": 7.73,
+        "y": 10.11,
+        "z": 50.68
+      },
+      "planet": " Pluto",
+      "material": "Pluto",
+      "children": []
+    },
+    {
+      "id": 11,
+      "position": {
+        "x": 7.73,
+        "y": 10.11,
+        "z": 50.68
+      },
+      "planet": "Earth",
+      "material": "Earth",
       "children": []
     }
   ]
