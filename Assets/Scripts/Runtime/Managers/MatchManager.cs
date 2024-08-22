@@ -63,7 +63,7 @@ public class MatchManager : MonoBehaviour
         }
         
     } 
-    void RearrangeSpheres()
+    public void RearrangeSpheres()
     {
         submitManager.sphereInfos.Sort((a, b) => a.Index.CompareTo(b.Index));
    

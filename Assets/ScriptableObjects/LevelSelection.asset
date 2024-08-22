@@ -15,5 +15,76 @@ MonoBehaviour:
   levelIndex: 0
   score: 0
   levelData:
-    title: 
-    planets: []
+    title: Level1
+    planets:
+    - id: 0
+      position: {x: 7.73, y: 10.11, z: 44.68}
+      planet: Moon
+      material: Moon
+      children: 030000000600000009000000
+    - id: 1
+      position: {x: 10.73, y: 10.11, z: 44.68}
+      planet: Jupiter
+      material: Jupiter
+      children: 04000000070000000a000000
+    - id: 2
+      position: {x: 13.73, y: 10.11, z: 44.68}
+      planet: Moon
+      material: Moon
+      children: 05000000080000000b000000
+    - id: 3
+      position: {x: 7.73, y: 10.11, z: 47.68}
+      planet: Earth
+      material: Earth
+      children: 0600000009000000
+    - id: 4
+      position: {x: 10.73, y: 10.11, z: 47.68}
+      planet: Earth
+      material: Earth
+      children: 070000000a000000
+    - id: 5
+      position: {x: 13.73, y: 10.11, z: 47.68}
+      planet: ' Jupiter'
+      material: Jupiter
+      children: 080000000b000000
+    - id: 6
+      position: {x: 7.73, y: 10.11, z: 50.68}
+      planet: Pluto
+      material: Pluto
+      children: 09000000
+    - id: 7
+      position: {x: 7.73, y: 10.11, z: 50.68}
+      planet: Pluto
+      material: Pluto
+      children: 0a000000
+    - id: 8
+      position: {x: 7.73, y: 10.11, z: 50.68}
+      planet: Jupiter
+      material: Jupiter
+      children: 0b000000
+    - id: 9
+      position: {x: 7.73, y: 10.11, z: 50.68}
+      planet: ' Moon'
+      material: Moon
+      children: 
+    - id: 10
+      position: {x: 7.73, y: 10.11, z: 50.68}
+      planet: ' Pluto'
+      material: Pluto
+      children: 
+    - id: 11
+      position: {x: 7.73, y: 10.11, z: 50.68}
+      planet: Earth
+      material: Earth
+      children: 
+  sphereMaterials:
+  - {fileID: 2100000, guid: b49efa3156d52a441b6ea06c49643c02, type: 2}
+  - {fileID: 2100000, guid: dc762fa09188f5440b2d42c7afd9bc27, type: 2}
+  - {fileID: 2100000, guid: 342f8c39c6ed43a4ebf3d0ac0cb13abc, type: 2}
+  - {fileID: 2100000, guid: 21df79fe870411c438abe3edbf994200, type: 2}
+  - {fileID: 2100000, guid: 0f0f9690ecc406746a5b53d07b3c9cda, type: 2}
+  - {fileID: 2100000, guid: 52a6f806bfdca1c45b188d305cb67ec7, type: 2}
+  - {fileID: 2100000, guid: d005aa0ab7f7673408af762a11da4afd, type: 2}
+  - {fileID: 2100000, guid: 53f659b2ea000894cb09e808d3843564, type: 2}
+  - {fileID: 2100000, guid: c4506aa43be14024690e83ac43507d96, type: 2}
+  - {fileID: 2100000, guid: 4f041aa6670d33944836864dc5c6b62a, type: 2}

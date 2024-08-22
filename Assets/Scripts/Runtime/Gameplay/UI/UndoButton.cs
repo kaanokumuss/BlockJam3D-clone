@@ -4,6 +4,7 @@ using DG.Tweening;
 
 public class UndoButton : MonoBehaviour
 {
+    [SerializeField] private MatchManager matchManager;
     [SerializeField] private SubmitManager submitManager;
     [SerializeField] private Button undoButton;
 
@@ -19,10 +20,9 @@ public class UndoButton : MonoBehaviour
 
     void OnClick()
     {
-        UndoLastMove(); 
-        ScoreEvents.OnTappedUndoButton?.Invoke();
-
+        UndoLastMove();     
     }
+
     public void UndoLastMove()
     {
         if (submitManager.undoStack.Count > 0)
@@ -36,7 +36,13 @@ public class UndoButton : MonoBehaviour
                 // Sphere'in info listesinden çıkarılması
                 submitManager.sphereInfos.RemoveAll(info => info.SphereObject == lastMovedSphere.gameObject);
                 submitManager.isCheckingForMatch = false;
+
+                // Rearrange işlemi Undo'dan sonra yapılır
+                matchManager.RearrangeSpheres();
+
+                // Skor eventi tetiklenir
+                ScoreEvents.OnTappedUndoButton?.Invoke();
             });
         }
-    } 
+    }
 }

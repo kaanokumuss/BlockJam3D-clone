@@ -6,29 +6,39 @@ public class SphereSpawner : MonoBehaviour
 {
     [SerializeField] private Transform sphereParent;
     [SerializeField] private GameObject spherePrefab;
-    public GridCreator gridCreator;
-    public SphereMaterialMixer materialAssigner; // ismi değiştirilmiş
+    [SerializeField] private LevelSelectionSO levelSelectionSO; // LevelSelectionSO referansı
+    
+    public SphereMaterialMixer materialAssigner;
     
     private void Start()
     {
-        SpawnSphere();
+        Debug.Log("SpawnSpheres metodu çalışıyor.");
+        SpawnSpheres();
     }
 
-    void SpawnSphere()
+    void SpawnSpheres()
     {
-        if (gridCreator == null || gridCreator.tiles == null || spherePrefab == null || materialAssigner == null)
+        if (spherePrefab == null || materialAssigner == null || levelSelectionSO == null || levelSelectionSO.levelData.planets == null)
         {
-            // Debug.LogWarning("Missing references!");
+            Debug.LogWarning("Missing references or level data!");
             return;
         }
 
-        for (int i = 0; i < gridCreator.tiles.Length; i++)
+        SphereData[] planets = levelSelectionSO.levelData.planets;
+
+        for (int i = 0; i < planets.Length; i++)
         {
-            Vector3 newPosition = gridCreator.tiles[i].position;
-            newPosition.y += 0.1f;
-          //  Debug.Log("Sphere will spawn at: " + newPosition); // Pozisyonu loglayın
-            GameObject sphere = Instantiate(spherePrefab, newPosition, Quaternion.identity, sphereParent);
-            materialAssigner.AssignMaterial(sphere); // Material atama
+            Vector3 position = planets[i].position;
+            Debug.Log($"Spawning sphere at position: {position}");  // Pozisyonu loglayın
+            GameObject sphere = Instantiate(spherePrefab, position, Quaternion.identity, sphereParent);
+
+            materialAssigner.AssignMaterial(sphere, planets[i].material);
+        
+            Sphere sphereComponent = sphere.GetComponent<Sphere>();
+            if (sphereComponent != null)
+            {
+                sphereComponent.Index = planets[i].id;
+            }
         }
     }
 

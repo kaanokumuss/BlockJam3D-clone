@@ -7,6 +7,6 @@ public struct SphereData
     public int id;
     public Vector3 position;
     public string planet;
-    public string material;  // Küçük harfli olarak değiştirdik
+    public string material;  
     public int[] children;
 }

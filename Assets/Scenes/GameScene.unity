@@ -373,11 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7fc75513418ee24385c7788a6750559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphereMaterials:
-  - {fileID: 2100000, guid: b49efa3156d52a441b6ea06c49643c02, type: 2}
-  - {fileID: 2100000, guid: 342f8c39c6ed43a4ebf3d0ac0cb13abc, type: 2}
-  - {fileID: 2100000, guid: 21df79fe870411c438abe3edbf994200, type: 2}
-  - {fileID: 2100000, guid: d005aa0ab7f7673408af762a11da4afd, type: 2}
+  levelSelectionSO: {fileID: 11400000, guid: a6f6e71dff80df749afcde90522835e9, type: 2}
 --- !u!114 &182237739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,7 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sphereParent: {fileID: 1463303626}
   spherePrefab: {fileID: 7350157718270089279, guid: 0ea1f73375b94054fa3c33552f180e49, type: 3}
-  gridCreator: {fileID: 869578053}
+  levelSelectionSO: {fileID: 11400000, guid: a6f6e71dff80df749afcde90522835e9, type: 2}
   materialAssigner: {fileID: 182237738}
 --- !u!1 &330585543
 GameObject:
@@ -734,7 +730,7 @@ Transform:
   m_GameObject: {fileID: 571289774}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.58, y: 0, z: 24.79}
+  m_LocalPosition: {x: -4.58, y: -0.224, z: 24.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

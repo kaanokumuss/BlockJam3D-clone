@@ -1,20 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SphereMaterialMixer : MonoBehaviour
 {
-    [SerializeField] public Material[] sphereMaterials; 
+    [SerializeField] private LevelSelectionSO levelSelectionSO; // ScriptableObject referansı
 
-    public void AssignMaterial(GameObject sphere)
+    public void AssignMaterial(GameObject sphere, string materialName)
     {
         Renderer renderer = sphere.GetComponent<Renderer>();
-        if (renderer != null && sphereMaterials.Length > 0)
+        if (renderer != null && levelSelectionSO.sphereMaterials.Length > 0)
         {
-            int randomIndex = Random.Range(0, sphereMaterials.Length);
-            renderer.material = sphereMaterials[randomIndex];
+            // Material'ı isme göre bul
+            Material material = System.Array.Find(levelSelectionSO.sphereMaterials, mat => mat.name == materialName);
+            if (material != null)
+            {
+                renderer.material = material;
+            }
+            else
+            {
+                Debug.LogWarning($"Material '{materialName}' bulunamadı!");
+            }
         }
     }
 
-    
+
 }
