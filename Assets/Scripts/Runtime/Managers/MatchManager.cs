@@ -72,7 +72,7 @@ public class MatchManager : MonoBehaviour
             submitManager.sphereInfos[i].Index = i;
             Vector3 newPosition =submitManager.submitPositions[i].position;
             newPosition.y += 0.46f;
-            submitManager.sphereInfos[i].SphereObject.GetComponent<Sphere>().MoveTo(newPosition);
+            submitManager.sphereInfos[i].SphereObject.GetComponent<Sphere>().MoveToWithAgent(newPosition);
         }
     } 
     public bool IsPositionAvailable(int index)

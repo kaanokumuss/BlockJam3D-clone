@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class Sphere : MonoBehaviour, ITouchable
@@ -7,36 +9,53 @@ public class Sphere : MonoBehaviour, ITouchable
     public int Index;
     public Material Material;
     public GameObject SphereObject;
+    public NavMeshAgent agent;
+    private float rotationDuration = 20f; // Rotation duration in seconds
+    private Vector3 rotationAxis = Vector3.up; // Rotation axis (Y-axis)
 
-    private float rotationDuration = 20f; // Dönüş süresi (saniye cinsinden)
-    private Vector3 rotationAxis = Vector3.up; // Dönme ekseni (Y ekseni)
-    
-    // Kürelerin önceki pozisyonunu saklamak için alan
+    // Field to store the previous position of the spheres
     public Vector3 PreviousPosition { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
-        RotateSphere(); // Dönme işlemini başlat
+        agent = GetComponent<NavMeshAgent>();
+        RotateSphere(); // Start rotating
     }
 
-    public Tween MoveTo(Vector3 targetPosition)
+    public void MoveToWithAgent(Vector3 targetPosition, System.Action onComplete = null)
     {
-        // Eski pozisyonu kaydet
-        PreviousPosition = transform.position;
-        return transform.DOMove(targetPosition,0.5f).SetEase(Ease.InOutQuad);
+        if (agent != null)
+        {
+            // Set previous position before moving to the new target
+            PreviousPosition = transform.position;
+
+            agent.SetDestination(targetPosition);
+            StartCoroutine(CheckIfReachedDestination(onComplete));
+        }
     }
 
-    // Küreyi önceki pozisyonuna geri döndüren metod
-    public Tween MoveBack()
+    // Method to move the sphere back to its previous position
+    public void MoveBack(System.Action onComplete = null)
     {
-        return transform.DOMove(PreviousPosition, 1f).SetEase(Ease.InOutQuad);
+        if (agent != null)
+        {
+            agent.SetDestination(PreviousPosition);
+            StartCoroutine(CheckIfReachedDestination(onComplete));
+        }
+    }
+
+    private IEnumerator CheckIfReachedDestination(System.Action onComplete)
+    {
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        onComplete?.Invoke();
     }
 
     private void RotateSphere()
     {
-        // Gezegenin kendi ekseni etrafında dönmesini sağlar
-        transform.DORotate(rotationAxis * 360f, rotationDuration, RotateMode.FastBeyond360)
-            .SetEase(Ease.Linear) // Hızın sabit olması için Linear easing kullanılır
-            .SetLoops(-1, LoopType.Restart); // Sonsuz döngü, sürekli dönmesini sağlar
+        transform.Rotate(Vector3.up * Time.deltaTime * rotationDuration);
     }
 }

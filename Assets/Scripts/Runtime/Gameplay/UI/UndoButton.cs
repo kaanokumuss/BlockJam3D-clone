@@ -18,7 +18,7 @@ public class UndoButton : MonoBehaviour
         undoButton.onClick.RemoveListener(OnClick);
     }
 
-    void OnClick()
+    private void OnClick()
     {
         UndoLastMove();     
     }
@@ -30,17 +30,17 @@ public class UndoButton : MonoBehaviour
             Sphere lastMovedSphere = submitManager.undoStack.Pop();
             Debug.Log("Popped");
 
-            // Sphere'i undo işlemi için geri taşı
-            lastMovedSphere.MoveBack().OnComplete(() =>
+            // Move the sphere back and pass a callback to handle completion
+            lastMovedSphere.MoveBack(() =>
             {
-                // Sphere'in info listesinden çıkarılması
+                // Remove sphere from info list
                 submitManager.sphereInfos.RemoveAll(info => info.SphereObject == lastMovedSphere.gameObject);
                 submitManager.isCheckingForMatch = false;
 
-                // Rearrange işlemi Undo'dan sonra yapılır
+                // Rearrange spheres after Undo
                 matchManager.RearrangeSpheres();
 
-                // Skor eventi tetiklenir
+                // Trigger score event
                 ScoreEvents.OnTappedUndoButton?.Invoke();
             });
         }
