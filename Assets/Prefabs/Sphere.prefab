@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 811708496487572510}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Planet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,6 +122,9 @@ MonoBehaviour:
   Index: 0
   Material: {fileID: 2100000, guid: 60590c38e57f0ba408e9575a6f55d941, type: 2}
   SphereObject: {fileID: 7350157718270089279}
+  agent: {fileID: 0}
+  rayLength: 3
+  collisionTags: []
 --- !u!195 &811708496487572510
 NavMeshAgent:
   m_ObjectHideFlags: 0

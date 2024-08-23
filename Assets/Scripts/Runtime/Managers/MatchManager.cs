@@ -7,7 +7,6 @@ public class MatchManager : MonoBehaviour
 {
     [SerializeField] SubmitManager submitManager;
     [SerializeField] private SphereMoveController sphereMoveController;
-
     private int requiredCount = 3;
     public void CheckForMatchingMaterials()
     {
