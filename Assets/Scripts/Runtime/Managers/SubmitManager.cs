@@ -15,6 +15,10 @@ public class SubmitManager : MonoBehaviour
     public float delay = 1f;
     public Stack<Sphere> undoStack = new Stack<Sphere>(); 
     private bool canTap = true; // Yeni değişken eklendi.
+    public float rayLength = 3f;
+    public string[] collisionTags;
+
+
 
     void OnEnable()
     {
@@ -30,27 +34,38 @@ public class SubmitManager : MonoBehaviour
     {
         if (isCheckingForMatch || !canTap) return; // `canTap` kontrolü eklendi.
 
+        // Cast the element to a GameObject for raycasting
+        GameObject touchedSphere = touchedElement.gameObject;
+
+        int collisionCount = CheckRaycastCollisions(touchedSphere); // Pass GameObject for collision check
         isCheckingForMatch = true;
         canTap = false; // Dokunma işlemi başladıktan sonra dokunma devre dışı bırakılır.
 
-        GameObject touchedSphere = touchedElement.gameObject;
-        Renderer renderer = touchedSphere.GetComponent<Renderer>();
-        Material sphereMaterial = renderer.material;
-
-        int targetIndex = matchManager.GetAvailableIndexForMaterial(sphereMaterial);
-
-        if (targetIndex >= 0)
+        if (collisionCount < 4)
         {
-            sphereMoveController.MoveSphereToPosition(touchedSphere, targetIndex, sphereMaterial);
+            Renderer renderer = touchedSphere.GetComponent<Renderer>();
+            Material sphereMaterial = renderer.material;
+    
+            int targetIndex = matchManager.GetAvailableIndexForMaterial(sphereMaterial);
+    
+            if (targetIndex >= 0)
+            {
+                sphereMoveController.MoveSphereToPosition(touchedSphere, targetIndex, sphereMaterial);
+            }
+            else
+            {
+                Debug.LogError("No available index found for the color.");
+                isCheckingForMatch = false;
+                canTap = true; // Hata durumunda tekrar dokunma aktif hale getirilir.
+            }
+
+            StartCoroutine(EnableTapAfterDelay(delay)); // 2 saniye bekleme başlatılır.
         }
         else
         {
-            Debug.LogError("No available index found for the color.");
             isCheckingForMatch = false;
-            canTap = true; // Hata durumunda tekrar dokunma aktif hale getirilir.
+            canTap = true;
         }
-
-        StartCoroutine(EnableTapAfterDelay(delay)); // 2 saniye bekleme başlatılır.
     }
 
     // Yeni Coroutine metodu eklendi.
@@ -76,6 +91,49 @@ public class SubmitManager : MonoBehaviour
         else
         {
             Debug.LogError("Sphere component not found on the provided GameObject.");
+        }
+    }
+    private int CheckRaycastCollisions(GameObject touchedElement)
+    {
+        int tagCount = 0; // Initialize count
+        Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+
+        foreach (Vector3 direction in directions)
+        {
+            RaycastHit hit;
+            Debug.DrawRay(touchedElement.transform.position, direction * rayLength, Color.red, 1f);
+
+            if (Physics.Raycast(touchedElement.transform.position, direction, out hit, rayLength))
+            {
+                Debug.Log("Hit detected with object: " + hit.collider.name + " with tag: " + hit.collider.tag);
+
+                tagCount++;
+            }
+            else
+            {
+                Debug.Log("No hit detected in direction: " + direction);
+            }
+
+            Debug.Log("Buradan ciktim ");
+        }
+
+        Debug.Log("Total tags matched: " + tagCount);
+        return tagCount;
+    }
+   
+
+    public bool CanMove(GameObject touchedElement)
+    {
+        int collisionCount = CheckRaycastCollisions(touchedElement); // Call the collision check
+        Debug.Log("CanMove called. Collisions detected: " + collisionCount);
+
+        if (collisionCount < 4)
+        {
+            return true;
+        }
+        else
+        {
+            return false;  // Allow movement if fewer than 4 collisions are detected
         }
     }
 }

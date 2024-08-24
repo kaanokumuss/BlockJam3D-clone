@@ -44,6 +44,8 @@ public class SphereMoveController : MonoBehaviour
             matchManager.CheckForMatchingMaterials();
             submitManager.isCheckingForMatch = false;
         });
+        
+        
     }
 
     

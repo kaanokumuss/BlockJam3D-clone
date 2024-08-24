@@ -44,5 +44,24 @@ public class UndoButton : MonoBehaviour
                 ScoreEvents.OnTappedUndoButton?.Invoke();
             });
         }
+        // if (submitManager.undoStack.Count > 0)
+        // {
+        //     Sphere lastMovedSphere = submitManager.undoStack.Pop();
+        //     Debug.Log("Popped");
+        //
+        //     // Move the sphere back and pass a callback to handle completion
+        //     lastMovedSphere.MoveBack(() =>
+        //     {
+        //         // Remove sphere from info list
+        //         submitManager.sphereInfos.RemoveAll(info => info.SphereObject == lastMovedSphere.gameObject);
+        //         submitManager.isCheckingForMatch = false;
+        //
+        //         // Rearrange spheres after Undo
+        //         matchManager.RearrangeSpheres();
+        //
+        //         // Trigger score event
+        //         ScoreEvents.OnTappedUndoButton?.Invoke();
+        //     });
+        // }
     }
 }

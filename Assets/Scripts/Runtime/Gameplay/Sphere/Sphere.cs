@@ -13,7 +13,6 @@ public class Sphere : MonoBehaviour, ITouchable
     private float rotationDuration = 20f; // Rotation duration in seconds
     private Vector3 rotationAxis = Vector3.up; // Rotation axis (Y-axis)
     public float rayLength = 1f;
-    public string[] collisionTags;
     
     public bool canMove;
     
@@ -28,27 +27,9 @@ public class Sphere : MonoBehaviour, ITouchable
 
     public void MoveToWithAgent(Vector3 targetPosition, System.Action onComplete = null)
     {
-        canMove = CanMove();
-        if (canMove)
-        {
-            if (!agent.enabled)
-            {
-                agent.enabled = true;
-            }
-
-            PreviousPosition = transform.position;
-            agent.SetDestination(targetPosition);
-            StartCoroutine(CheckIfReachedDestination(onComplete ));
-        }
-
-        if (canMove != true)
-        {
-            Debug.Log("buraya girdim aminakoidugunm ");
-            PreviousPosition = transform.position;
-            agent.enabled = false;
-           
-            StartCoroutine(CheckIfReachedDestination(onComplete ));
-        }
+        PreviousPosition = transform.position;
+        agent.SetDestination(targetPosition);
+        StartCoroutine(CheckIfReachedDestination(onComplete ));
     }
 
 
@@ -60,7 +41,7 @@ public class Sphere : MonoBehaviour, ITouchable
         {
             agent.SetDestination(PreviousPosition);
            
-            StartCoroutine(CheckIfReachedDestination(onComplete ));
+            StartCoroutine(CheckIfReachedDestination(onComplete));
         }
     }
 
@@ -73,10 +54,6 @@ public class Sphere : MonoBehaviour, ITouchable
             }
 
             onComplete?.Invoke();
-        
-        
-        
-       
     }
 
     private void RotateSphere()
@@ -114,23 +91,8 @@ public class Sphere : MonoBehaviour, ITouchable
         return tagCount;
     }
 
-    private bool IsInCollisionTags(string tag)
-    {
-        foreach (string collisionTag in collisionTags)
-        {
-            if (collisionTag == tag)
-            {
-                return true;
-            }
-        }
+    
 
-        return false;
-    }
-
-    public bool CanMove()
-    {
-        int collisionCount = CheckRaycastCollisions();
-        Debug.Log("CanMove called. Collisions detected: " + collisionCount);
-        return collisionCount < 4; // Allow movement if fewer than 4 collisions are detected
-    }
+   
+    
 }
