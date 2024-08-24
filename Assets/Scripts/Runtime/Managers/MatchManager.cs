@@ -80,6 +80,7 @@ public class MatchManager : MonoBehaviour
     }
     public int GetAvailableIndexForMaterial(Material material)
     {
+        
         List<int> sameMaterialIndices = new List<int>();
         foreach (var info in submitManager.sphereInfos)
         {

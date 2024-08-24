@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class SphereMoveController : MonoBehaviour
 {
@@ -34,6 +36,7 @@ public class SphereMoveController : MonoBehaviour
     {
         Vector3 newPosition = submitManager.submitPositions[targetIndex].position;
         newPosition.y += 0.46f;
+        
         sphere.GetComponent<Sphere>().MoveToWithAgent(newPosition, () =>
         {
             submitManager.undoStack.Push(sphere.GetComponent<Sphere>());
@@ -42,4 +45,6 @@ public class SphereMoveController : MonoBehaviour
             submitManager.isCheckingForMatch = false;
         });
     }
+
+    
 }

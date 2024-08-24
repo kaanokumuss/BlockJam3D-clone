@@ -28,11 +28,9 @@ public class Sphere : MonoBehaviour, ITouchable
 
     public void MoveToWithAgent(Vector3 targetPosition, System.Action onComplete = null)
     {
-        // Always check if the sphere can move before moving
         canMove = CanMove();
         if (canMove)
         {
-            // Ensure the agent is enabled before moving
             if (!agent.enabled)
             {
                 agent.enabled = true;
@@ -40,13 +38,16 @@ public class Sphere : MonoBehaviour, ITouchable
 
             PreviousPosition = transform.position;
             agent.SetDestination(targetPosition);
-            StartCoroutine(CheckIfReachedDestination(onComplete));
+            StartCoroutine(CheckIfReachedDestination(onComplete ));
         }
-        else
+
+        if (canMove != true)
         {
+            Debug.Log("buraya girdim aminakoidugunm ");
             PreviousPosition = transform.position;
-            agent.SetDestination(PreviousPosition);
-            Debug.Log("Movement blocked due to collisions.");
+            agent.enabled = false;
+           
+            StartCoroutine(CheckIfReachedDestination(onComplete ));
         }
     }
 
@@ -58,18 +59,24 @@ public class Sphere : MonoBehaviour, ITouchable
         if (agent != null)
         {
             agent.SetDestination(PreviousPosition);
-            StartCoroutine(CheckIfReachedDestination(onComplete));;
+           
+            StartCoroutine(CheckIfReachedDestination(onComplete ));
         }
     }
 
-    private IEnumerator CheckIfReachedDestination(System.Action onComplete)
+    private IEnumerator CheckIfReachedDestination(System.Action onComplete )
     {
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
-        {
-            yield return null;
-        }
+       
+            while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+            {
+                yield return null;
+            }
 
-        onComplete?.Invoke();
+            onComplete?.Invoke();
+        
+        
+        
+       
     }
 
     private void RotateSphere()
