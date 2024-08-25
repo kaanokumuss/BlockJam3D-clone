@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public class SubmitManager : MonoBehaviour
@@ -32,47 +34,58 @@ public class SubmitManager : MonoBehaviour
 
     void HandleElementTapped(ITouchable touchedElement)
     {
-        if (isCheckingForMatch || !canTap) return; // canTap kontrolü eklendi.
+        if (isCheckingForMatch || !canTap) return; // Check if currently processing or if tapping is allowed
 
         // Cast the element to a GameObject for raycasting
         GameObject touchedSphere = touchedElement.gameObject;
 
         int collisionCount = CheckRaycastCollisions(touchedSphere); // Pass GameObject for collision check
         isCheckingForMatch = true;
-        canTap = false; // Dokunma işlemi başladıktan sonra dokunma devre dışı bırakılır.
+        canTap = false; // Disable tap after touch
+
+        Renderer renderer = touchedSphere.GetComponent<Renderer>();
+        if (renderer == null)
+        {
+            Debug.LogError("Renderer component not found on the touched sphere.");
+            isCheckingForMatch = false;
+            StartCoroutine(EnableTapAfterDelay(delay)); // Re-enable tap after delay
+            return;
+        }
+
+        Material sphereMaterial = renderer.material;
+        if (sphereMaterial.name.Equals("Lava (Instance)", System.StringComparison.OrdinalIgnoreCase))
+        {
+            GameEvents.CantTouch?.Invoke();
+            Debug.Log("Lava material is not touchable.");
+            isCheckingForMatch = false;
+            StartCoroutine(EnableTapAfterDelay(delay)); // Re-enable tap after delay
+            return; // Exit the method if the material is Lava
+        }
 
         if (collisionCount < 4)
         {
-            Renderer renderer = touchedSphere.GetComponent<Renderer>();
-            Material sphereMaterial = renderer.material;
-    
             int targetIndex = matchManager.GetAvailableIndexForMaterial(sphereMaterial);
-    
+
             if (targetIndex >= 0)
             {
                 sphereMoveController.MoveSphereToPosition(touchedSphere, targetIndex, sphereMaterial);
             }
-
-            if (targetIndex ==-1)
+            else
             {
                 GameEvents.FailPanel?.Invoke();                
                 Debug.LogError("No available index found for the color.");
-                isCheckingForMatch = false;
                 GameEvents.OnFail?.Invoke();
-                canTap = false; // Hata durumunda tekrar dokunma aktif hale getirilir.
-                
             }
-            
-            
-
-            StartCoroutine(EnableTapAfterDelay(delay)); // 2 saniye bekleme başlatılır.
+    
+            StartCoroutine(EnableTapAfterDelay(delay)); // Start delay before re-enabling tap
         }
         else
         {
             isCheckingForMatch = false;
-            canTap = true;
+            canTap = true; // Enable tap if the collision count is 4 or more
         }
     }
+
 
     // Yeni Coroutine metodu eklendi.
     private IEnumerator EnableTapAfterDelay(float delay)
