@@ -55,6 +55,7 @@ public class SubmitManager : MonoBehaviour
 
             if (targetIndex ==-1)
             {
+                GameEvents.FailPanel?.Invoke();                
                 Debug.LogError("No available index found for the color.");
                 isCheckingForMatch = false;
                 GameEvents.OnFail?.Invoke();
@@ -127,18 +128,5 @@ public class SubmitManager : MonoBehaviour
     }
    
 
-    public bool CanMove(GameObject touchedElement)
-    {
-        int collisionCount = CheckRaycastCollisions(touchedElement); // Call the collision check
-        Debug.Log("CanMove called. Collisions detected: " + collisionCount);
-
-        if (collisionCount < 4)
-        {
-            return true;
-        }
-        else
-        {
-            return false;  // Allow movement if fewer than 4 collisions are detected
-        }
-    }
+    
 }

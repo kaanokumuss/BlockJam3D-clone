@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,6 +10,7 @@ public class LevelManager : MonoBehaviour
     LevelData[] _levelData; 
     LevelSaveData _levelSaveData;
     [SerializeField] ScoreManager scoreManager;
+    [SerializeField] private float delayBeforeLoadMetaScene = 5f; // Gecikme süresi
 
     void Awake()
     {
@@ -25,11 +27,12 @@ public class LevelManager : MonoBehaviour
     void OnDestroy()
     {
         GameEvents.OnWin -= Win;
-        GameEvents.OnFail-= Win;
+        GameEvents.OnFail -= Fail;
         LevelEvents.OnLevelSelected -= LevelSelected;
         LevelEvents.OnLevelWin -= Save_Callback;
         LevelEvents.OnLevelDataNeeded -= LevelDataNeeded_Callback;
     }
+
     void LevelSelected(int index)
     {
         LevelSelectionSO.levelIndex = index;
@@ -37,16 +40,15 @@ public class LevelManager : MonoBehaviour
         LevelSelectionSO.score = _levelSaveData.Data[index].highScore;
         SceneEvents.OnLoadGameScene?.Invoke();
     }
+
     void ReadLevels()
     {
-        
         _levelData = new LevelData[levelFiles.Length];
         Debug.Log($"Total files to read: {levelFiles.Length}");
 
         for (int i = 0; i < levelFiles.Length; i++)
         {
             _levelData[i] = JsonUtility.FromJson<LevelData>(levelFiles[i].text);
-          //  Debug.Log($"Level {i} read successfully: {_levelData[i].title}");
         }
     }
 
@@ -86,16 +88,25 @@ public class LevelManager : MonoBehaviour
     {
         LevelEvents.OnSpawnLevelSelectionButtons?.Invoke(_levelSaveData.Data);
     }
+
     private void Win()
     {
         Save_Callback(GetCompleteData());
-        LoadMetaScene();
+        GameEvents.WinPanel?.Invoke();
+        StartCoroutine(LoadMetaSceneWithDelay()); // Gecikmeli olarak meta sahneye geçiş yap
     }
 
     private void Fail()
     {
+        StartCoroutine(LoadMetaSceneWithDelay()); // Gecikmeli olarak meta sahneye geçiş yap
+    }
+
+    private IEnumerator LoadMetaSceneWithDelay()
+    {
+        yield return new WaitForSeconds(delayBeforeLoadMetaScene); // Belirli süre bekle
         LoadMetaScene();
     }
+
     private CompleteData GetCompleteData()
     {
         if (LevelSelectionSO == null)
