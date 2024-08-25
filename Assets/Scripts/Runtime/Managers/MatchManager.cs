@@ -123,7 +123,6 @@ public class MatchManager : MonoBehaviour
         if (submitManager.sphereInfos.Count == 0)
         {
             GameEvents.OnWin?.Invoke();
-            Debug.Log("sadsad");
         }
     }
 }

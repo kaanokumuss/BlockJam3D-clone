@@ -32,7 +32,7 @@ public class SubmitManager : MonoBehaviour
 
     void HandleElementTapped(ITouchable touchedElement)
     {
-        if (isCheckingForMatch || !canTap) return; // `canTap` kontrolü eklendi.
+        if (isCheckingForMatch || !canTap) return; // canTap kontrolü eklendi.
 
         // Cast the element to a GameObject for raycasting
         GameObject touchedSphere = touchedElement.gameObject;
@@ -56,8 +56,11 @@ public class SubmitManager : MonoBehaviour
             {
                 Debug.LogError("No available index found for the color.");
                 isCheckingForMatch = false;
-                canTap = true; // Hata durumunda tekrar dokunma aktif hale getirilir.
+                GameEvents.OnFail?.Invoke();
+                canTap = false; // Hata durumunda tekrar dokunma aktif hale getirilir.
+
             }
+            
 
             StartCoroutine(EnableTapAfterDelay(delay)); // 2 saniye bekleme başlatılır.
         }

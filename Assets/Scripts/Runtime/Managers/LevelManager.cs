@@ -19,11 +19,13 @@ public class LevelManager : MonoBehaviour
         LevelEvents.OnLevelWin += Save_Callback;
         LevelEvents.OnLevelDataNeeded += LevelDataNeeded_Callback; 
         GameEvents.OnWin += Win;
+        GameEvents.OnFail += Fail;
     }
 
     void OnDestroy()
     {
         GameEvents.OnWin -= Win;
+        GameEvents.OnFail-= Win;
         LevelEvents.OnLevelSelected -= LevelSelected;
         LevelEvents.OnLevelWin -= Save_Callback;
         LevelEvents.OnLevelDataNeeded -= LevelDataNeeded_Callback;
@@ -87,6 +89,11 @@ public class LevelManager : MonoBehaviour
     private void Win()
     {
         Save_Callback(GetCompleteData());
+        LoadMetaScene();
+    }
+
+    private void Fail()
+    {
         LoadMetaScene();
     }
     private CompleteData GetCompleteData()
