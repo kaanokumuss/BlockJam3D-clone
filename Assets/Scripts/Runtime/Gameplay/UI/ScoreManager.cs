@@ -1,29 +1,30 @@
 using UnityEngine;
 using TMPro;
+
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreText; // TMP_Text türünde TextMeshPro referansı
-    private int score = 0;
+    public int score = 0;
 
     private void OnEnable()
     {
-        ScoreEvents.OnDestroyedSphere += GetPoint;
-        ScoreEvents.OnTappedUndoButton += LosePoint;
+        ScoreEvents.OnDestroyedSphere += IncreaseScore;
+        ScoreEvents.OnTappedUndoButton += DecreaseScore;
     }
 
     private void OnDisable()
     {
-        ScoreEvents.OnTappedUndoButton -= LosePoint;
-        ScoreEvents.OnDestroyedSphere -= GetPoint;
+        ScoreEvents.OnTappedUndoButton -= DecreaseScore;
+        ScoreEvents.OnDestroyedSphere -= IncreaseScore;
     }
 
-    private void GetPoint()
+    public void IncreaseScore()
     {
         score += 10;
         UpdateScoreText();
     }
 
-    void LosePoint()
+    public void DecreaseScore()
     {
         score -= 10;
         UpdateScoreText();
@@ -31,6 +32,12 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateScoreText()
     {
+        if (scoreText == null)
+        {
+            Debug.LogError("scoreText is not assigned.");
+            return;
+        }
+        
         scoreText.text = "Score : " + score;
     }
 }

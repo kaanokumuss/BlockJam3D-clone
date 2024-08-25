@@ -36,12 +36,10 @@ public class UndoButton : MonoBehaviour
                 // Remove sphere from info list
                 submitManager.sphereInfos.RemoveAll(info => info.SphereObject == lastMovedSphere.gameObject);
                 submitManager.isCheckingForMatch = false;
-
-                // Rearrange spheres after Undo
-                matchManager.RearrangeSpheres();
-
                 // Trigger score event
+                matchManager.RearrangeSpheres();
                 ScoreEvents.OnTappedUndoButton?.Invoke();
+                
             });
         }
         // if (submitManager.undoStack.Count > 0)

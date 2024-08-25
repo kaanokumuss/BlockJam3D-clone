@@ -811,6 +811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 145756997}
+  score: 0
 --- !u!1 &571289774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,7 +1225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cdd1d8799e10b48bb819c64329b7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  matchManager: {fileID: 0}
+  matchManager: {fileID: 1832476201}
   submitManager: {fileID: 1151135292}
   undoButton: {fileID: 1087252306}
 --- !u!1 &1140768525
@@ -1494,6 +1495,8 @@ MonoBehaviour:
   sphereInfos: []
   isCheckingForMatch: 0
   delay: 1
+  rayLength: 2.5
+  collisionTags: []
 --- !u!1 &1207210096
 GameObject:
   m_ObjectHideFlags: 0
@@ -2454,6 +2457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   submitManager: {fileID: 1151135292}
   sphereMoveController: {fileID: 1423445469}
+  scoreManager: {fileID: 477228663}
 --- !u!1 &2085081088
 GameObject:
   m_ObjectHideFlags: 0

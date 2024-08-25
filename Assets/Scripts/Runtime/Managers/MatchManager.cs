@@ -7,6 +7,7 @@ public class MatchManager : MonoBehaviour
 {
     [SerializeField] SubmitManager submitManager;
     [SerializeField] private SphereMoveController sphereMoveController;
+    [SerializeField] ScoreManager scoreManager;
     private int requiredCount = 3;
     public void CheckForMatchingMaterials()
     {
@@ -60,7 +61,7 @@ public class MatchManager : MonoBehaviour
                 submitManager.sphereInfos.RemoveAt(i);
             }
         }
-        
+        NoExistingSphere();
     } 
     public void RearrangeSpheres()
     {
@@ -115,6 +116,15 @@ public class MatchManager : MonoBehaviour
         }
 
         return -1;
+    }
+
+    void NoExistingSphere()
+    {
+        if (submitManager.sphereInfos.Count == 0)
+        {
+            GameEvents.OnWin?.Invoke();
+            Debug.Log("sadsad");
+        }
     }
 }
 

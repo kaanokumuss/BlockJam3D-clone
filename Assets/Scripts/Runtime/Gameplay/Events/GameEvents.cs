@@ -5,5 +5,7 @@ using System;
 
 public static class GameEvents 
 {
+    public static Action OnWin, OnFail;
     public static  Action OnSphereTapped;
 }
+ 

@@ -6,4 +6,5 @@ public static class LevelEvents
     public static Action OnLevelDataNeeded;
     public static Action<LevelScoresData[]> OnSpawnLevelSelectionButtons;
     public static Action<CompleteData> OnLevelWin;
+    public static Action OnLevelLose;
 }

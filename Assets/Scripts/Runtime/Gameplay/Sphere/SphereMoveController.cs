@@ -25,8 +25,8 @@ public class SphereMoveController : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("No more space to shift spheres right!");
-                    break;
+                   
+                    
                 }
             }
         }

@@ -114,7 +114,7 @@ public class SubmitManager : MonoBehaviour
                 Debug.Log("No hit detected in direction: " + direction);
             }
 
-            Debug.Log("Buradan ciktim ");
+           
         }
 
         Debug.Log("Total tags matched: " + tagCount);

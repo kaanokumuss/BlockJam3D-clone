@@ -8,18 +8,22 @@ public class LevelManager : MonoBehaviour
     [SerializeField] TextAsset[] levelFiles;
     LevelData[] _levelData; 
     LevelSaveData _levelSaveData;
+    [SerializeField] ScoreManager scoreManager;
 
     void Awake()
     {
         ReadLevels();
         Load();
+        scoreManager = FindObjectOfType<ScoreManager>();
         LevelEvents.OnLevelSelected += LevelSelected;
         LevelEvents.OnLevelWin += Save_Callback;
         LevelEvents.OnLevelDataNeeded += LevelDataNeeded_Callback; 
+        GameEvents.OnWin += Win;
     }
 
     void OnDestroy()
     {
+        GameEvents.OnWin -= Win;
         LevelEvents.OnLevelSelected -= LevelSelected;
         LevelEvents.OnLevelWin -= Save_Callback;
         LevelEvents.OnLevelDataNeeded -= LevelDataNeeded_Callback;
@@ -79,5 +83,27 @@ public class LevelManager : MonoBehaviour
     void LevelDataNeeded_Callback()
     {
         LevelEvents.OnSpawnLevelSelectionButtons?.Invoke(_levelSaveData.Data);
+    }
+    private void Win()
+    {
+        Save_Callback(GetCompleteData());
+        LoadMetaScene();
+    }
+    private CompleteData GetCompleteData()
+    {
+        if (LevelSelectionSO == null)
+        {
+            Debug.LogError("LevelSelectionSO is null in GetCompleteData.");
+        }
+        if (scoreManager == null)
+        {
+            Debug.LogError("scoreManager is null in GetCompleteData.");
+        }
+        return new CompleteData(LevelSelectionSO.levelIndex, scoreManager.score);
+    }
+
+    private void LoadMetaScene()
+    {
+        SceneEvents.OnLoadMetaScene?.Invoke();
     }
 }
