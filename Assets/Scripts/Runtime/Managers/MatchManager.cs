@@ -77,11 +77,28 @@ public class MatchManager : MonoBehaviour
     } 
     public bool IsPositionAvailable(int index)
     {
-        return index >= 0 && index < submitManager.submitPositions.Length && !submitManager.sphereInfos.Exists(info => info.Index == index);
+        // 1. Adım: İndeksin geçerli bir aralıkta olup olmadığını kontrol edin
+        if (index < 0 || index >= submitManager.submitPositions.Length)
+        {
+            // İndeks negatif veya dizinin uzunluğundan büyük veya eşitse, pozisyon geçerli değil
+            return false;
+        }
+
+        // 2. Adım: sphereInfos listesindeki her bir elemanı kontrol edin
+        foreach (var info in submitManager.sphereInfos)
+        {
+            // Eğer mevcut sphereInfos elemanının indeksi kontrol edilen indeksle eşleşiyorsa
+            if (info.Index == index)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
+
     public int GetAvailableIndexForMaterial(Material material)
     {
-        
         List<int> sameMaterialIndices = new List<int>();
         foreach (var info in submitManager.sphereInfos)
         {
@@ -102,11 +119,18 @@ public class MatchManager : MonoBehaviour
             }
             else
             {
+                // Pozisyon mevcut değilse, küreleri sağa kaydırın
                 sphereMoveController.ShiftSpheresRight(nextIndex);
-                return nextIndex;
+            
+                // shift işlemi başarılı olup olmadığını kontrol edin ve ona göre hareket edin
+                if (IsPositionAvailable(nextIndex))
+                {
+                    return nextIndex;
+                }
             }
         }
 
+        // Tüm pozisyonları kontrol edin
         for (int i = 0; i < submitManager.submitPositions.Length; i++)
         {
             if (IsPositionAvailable(i))
@@ -115,8 +139,69 @@ public class MatchManager : MonoBehaviour
             }
         }
 
+        // Hiçbir pozisyon mevcut değilse, -1 döndürün
         return -1;
     }
+
+    // public bool IsPositionAvailable(int index)
+    // {
+    //     // 1. Adım: İndeksin geçerli bir aralıkta olup olmadığını kontrol edin
+    //     if (index < 0 || index >= submitManager.submitPositions.Length)
+    //     {
+    //         // İndeks negatif veya dizinin uzunluğundan büyük veya eşitse, pozisyon geçerli değil
+    //         return false;
+    //     }
+    //
+    //     // 2. Adım: sphereInfos listesindeki her bir elemanı kontrol edin
+    //     foreach (var info in submitManager.sphereInfos)
+    //     {
+    //         // Eğer mevcut sphereInfos elemanının indeksi kontrol edilen indeksle eşleşiyorsa
+    //         if (info.Index == index)
+    //         {
+    //             return false;
+    //         }
+    //     }
+    //
+    //     return true;
+    // }
+    // public int GetAvailableIndexForMaterial(Material material)
+    // {
+    //     
+    //     List<int> sameMaterialIndices = new List<int>();
+    //     foreach (var info in submitManager.sphereInfos)
+    //     {
+    //         if (info.Material.name == material.name)
+    //         {
+    //             sameMaterialIndices.Add(info.Index);
+    //         }
+    //     }
+    //
+    //     if (sameMaterialIndices.Count > 0)
+    //     {
+    //         int lastSameMaterialIndex = sameMaterialIndices[sameMaterialIndices.Count - 1];
+    //         int nextIndex = lastSameMaterialIndex + 1;
+    //
+    //         if (IsPositionAvailable(nextIndex))
+    //         {
+    //             return nextIndex;
+    //         }
+    //         else
+    //         {
+    //             sphereMoveController.ShiftSpheresRight(nextIndex);
+    //             return nextIndex;
+    //         }
+    //     }
+    //
+    //     for (int i = 0; i < submitManager.submitPositions.Length; i++)
+    //     {
+    //         if (IsPositionAvailable(i))
+    //         {
+    //             return i;
+    //         }
+    //     }
+    //
+    //     return -1;
+    // }
 
     void NoExistingSphere()
     {

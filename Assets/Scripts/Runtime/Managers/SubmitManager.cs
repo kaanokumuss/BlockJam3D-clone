@@ -52,14 +52,16 @@ public class SubmitManager : MonoBehaviour
             {
                 sphereMoveController.MoveSphereToPosition(touchedSphere, targetIndex, sphereMaterial);
             }
-            else
+
+            if (targetIndex ==-1)
             {
                 Debug.LogError("No available index found for the color.");
                 isCheckingForMatch = false;
                 GameEvents.OnFail?.Invoke();
                 canTap = false; // Hata durumunda tekrar dokunma aktif hale getirilir.
-
+                
             }
+            
             
 
             StartCoroutine(EnableTapAfterDelay(delay)); // 2 saniye bekleme başlatılır.
