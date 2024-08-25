@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3717664554972094115}
   - component: {fileID: 1941828365787211872}
   - component: {fileID: 811708496487572510}
+  - component: {fileID: 8745765216919242061}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Planet
@@ -147,3 +148,17 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8745765216919242061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7350157718270089279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3a47ef773049644afe36e120906131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationDuration: 10
+  rotationAmount: {x: 360, y: 360, z: 360}

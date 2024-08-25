@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     private void OpenFailPanel()
     {
         failPanel.SetActive(true);
+        Enviroments.SetActive(false);
         StartCoroutine(HideFailPanelAfterDelay()); // Paneli belirli bir süre sonra kapatacak Coroutine'i başlat
     }
 
