@@ -588,6 +588,7 @@ GameObject:
   - component: {fileID: 347680860}
   - component: {fileID: 347680861}
   - component: {fileID: 347680862}
+  - component: {fileID: 347680863}
   m_Layer: 0
   m_Name: VolumeSlider
   m_TagString: Untagged
@@ -667,19 +668,7 @@ MonoBehaviour:
   m_Value: -80
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 347680862}
-        m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &347680862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,6 +682,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 446addcb1fff1e3458e27e7827762c60, type: 2}
+--- !u!114 &347680863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347680859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beb30f5055e134f4f95c34dd5fe00240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeSlider: {fileID: 347680861}
 --- !u!1 &447459291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1875,6 +1877,7 @@ GameObject:
   - component: {fileID: 880982159}
   - component: {fileID: 880982158}
   - component: {fileID: 880982157}
+  - component: {fileID: 880982162}
   m_Layer: 0
   m_Name: StartButton
   m_TagString: Untagged
@@ -1945,7 +1948,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 880982160}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 880982162}
+        m_TargetAssemblyTypeName: QuickPlay, Assembly-CSharp
+        m_MethodName: OnQuickPlayPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &880982158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2014,6 +2029,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880982154}
   m_CullTransparentMesh: 1
+--- !u!114 &880982162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880982154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c3283d5cbaef0c4984921662b85b217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &919122366
 GameObject:
   m_ObjectHideFlags: 0
@@ -3089,8 +3116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mat: {fileID: 2100000, guid: 27c0cce60d93adc4aa3fba77995f9921, type: 2}
-  rotationDuration: 10
-  maxRotation: 30
+  rotationDuration: 20
+  maxRotation: 300
 --- !u!1 &1466048134
 GameObject:
   m_ObjectHideFlags: 0

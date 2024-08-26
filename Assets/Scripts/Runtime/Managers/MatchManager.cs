@@ -8,7 +8,17 @@ public class MatchManager : MonoBehaviour
     [SerializeField] SubmitManager submitManager;
     [SerializeField] private SphereMoveController sphereMoveController;
     [SerializeField] ScoreManager scoreManager;
+    [SerializeField] private AudioClip matchSound; // Eklenecek ses dosyası
+    private AudioSource audioSource; // AudioSource bileşeni
     private int requiredCount = 3;
+
+    void Start()
+    {
+        // AudioSource bileşenini ekle
+        audioSource = gameObject.AddComponent<AudioSource>();
+        // Ses dosyasını ayarla
+        audioSource.clip = matchSound;
+    }
     public void CheckForMatchingMaterials()
     {
         submitManager.isCheckingForMatch = true;
@@ -27,8 +37,10 @@ public class MatchManager : MonoBehaviour
         
         foreach (var materialGroup in materialGroups)
         {
+            
             if (materialGroup.Value.Count >= requiredCount)
             {
+                PlayMatchSound();
                 Sequence sequence = DOTween.Sequence();
                 foreach (var SphereObject in materialGroup.Value)
                 {
@@ -208,6 +220,14 @@ public class MatchManager : MonoBehaviour
         if (submitManager.sphereInfos.Count == 0)
         {
             GameEvents.OnWin?.Invoke();
+        }
+    }
+
+    private void PlayMatchSound()
+    {
+        if (audioSource != null && matchSound != null)
+        {
+            audioSource.PlayOneShot(matchSound);
         }
     }
 }

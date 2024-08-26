@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject winPanel, failPanel , dangerPanel;
     [SerializeField] private GameObject Enviroments;
+    [SerializeField] private Button Menu;
+    [SerializeField] private GameObject MenuPanel;
     public float seconds = 5f;
 
     private void Awake()
@@ -19,6 +22,8 @@ public class UIManager : MonoBehaviour
         GameEvents.WinPanel -= OpenWinPanel;
         GameEvents.OnFail -= OpenFailPanel;
     }
+
+    
 
     private void OpenWinPanel()
     {
@@ -39,6 +44,11 @@ public class UIManager : MonoBehaviour
         dangerPanel.SetActive(true);
         Enviroments.SetActive(false);
         StartCoroutine(HideFailPanelAfterDelay()); // Paneli belirli bir süre sonra kapatacak Coroutine'i başlat
+    }
+
+    private void OpenMenuPanel()
+    {
+        
     }
 
     private IEnumerator HideFailPanelAfterDelay()

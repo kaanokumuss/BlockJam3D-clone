@@ -32,6 +32,10 @@ public class LevelManager : MonoBehaviour
         LevelEvents.OnLevelWin -= Save_Callback;
         LevelEvents.OnLevelDataNeeded -= LevelDataNeeded_Callback;
     }
+    public void QuickPlay()
+    {
+        LevelSelected(0);  // İlk seviyeyi seç ve oyunu başlat
+    }
 
     void LevelSelected(int index)
     {
