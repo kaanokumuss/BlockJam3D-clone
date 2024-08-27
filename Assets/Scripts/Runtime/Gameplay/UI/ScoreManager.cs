@@ -37,7 +37,7 @@ public class ScoreManager : MonoBehaviour
             Debug.LogError("scoreText is not assigned.");
             return;
         }
-        
+
         scoreText.text = "Score : " + score;
     }
 }

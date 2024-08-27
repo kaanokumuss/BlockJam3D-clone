@@ -16,20 +16,18 @@ public class VolumeControl : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("MusicManager bulunamadý!");
+            Debug.LogWarning("MusicManager bulunamadï¿½!");
         }
+
         musicAudioSource = FindObjectOfType<MusicManager>().GetComponent<AudioSource>();
 
-        // Slider'ýn maksimum ve minimum deðerlerini belirleyin
         volumeSlider.minValue = 0f;
         volumeSlider.maxValue = 1f;
 
-        // Önceki ayarý yükleyin veya varsayýlan deðeri kullanýn
         float savedVolume = PlayerPrefs.GetFloat(VolumeKey, 1f);
         volumeSlider.value = savedVolume;
         musicAudioSource.volume = savedVolume;
 
-        // Slider'ýn deðeri deðiþtiðinde ses seviyesini ayarlayýn
         volumeSlider.onValueChanged.AddListener(SetVolume);
     }
 

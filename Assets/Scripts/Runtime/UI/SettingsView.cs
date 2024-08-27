@@ -27,22 +27,22 @@ public class SettingsView : MonoBehaviour
     void Appear()
     {
         DOTween.Kill(settingsContainer);
-        
+
         settingsPanel.SetActive(true);
 
         settingsContainer.DOScale(1, .28f)
             .OnStart(() => settingsContainer.localScale = Vector3.one * .5f)
-            .OnComplete(()=> closeButton.interactable = true)
+            .OnComplete(() => closeButton.interactable = true)
             .SetEase(Ease.OutBack);
     }
-    
+
     void Disappear()
     {
         DOTween.Kill(settingsContainer);
-        
+
         settingsContainer.DOScale(0, .28f)
-            .OnStart(()=> closeButton.interactable = false)
-            .OnComplete(()=> settingsPanel.SetActive(false))
+            .OnStart(() => closeButton.interactable = false)
+            .OnComplete(() => settingsPanel.SetActive(false))
             .SetEase(Ease.InBack);
     }
 

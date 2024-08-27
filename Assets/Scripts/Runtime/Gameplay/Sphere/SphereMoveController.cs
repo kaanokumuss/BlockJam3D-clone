@@ -9,6 +9,7 @@ public class SphereMoveController : MonoBehaviour
 {
     [SerializeField] private SubmitManager submitManager;
     [SerializeField] private MatchManager matchManager;
+
     public void ShiftSpheresRight(int startIndex)
     {
         for (int i = submitManager.sphereInfos.Count - 1; i >= 0; i--)
@@ -23,11 +24,6 @@ public class SphereMoveController : MonoBehaviour
                     submitManager.sphereInfos[i].MoveToWithAgent(newPosition);
                     submitManager.sphereInfos[i].Index = newIndex;
                 }
-                else
-                {
-                   
-                    
-                }
             }
         }
     }
@@ -36,7 +32,7 @@ public class SphereMoveController : MonoBehaviour
     {
         Vector3 newPosition = submitManager.submitPositions[targetIndex].position;
         newPosition.y += 0.46f;
-        
+
         sphere.GetComponent<Sphere>().MoveToWithAgent(newPosition, () =>
         {
             submitManager.undoStack.Push(sphere.GetComponent<Sphere>());
@@ -44,9 +40,5 @@ public class SphereMoveController : MonoBehaviour
             matchManager.CheckForMatchingMaterials();
             submitManager.isCheckingForMatch = false;
         });
-        
-        
     }
-
-    
 }

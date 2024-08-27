@@ -5,8 +5,12 @@ namespace Runtime.Managers
 {
     public class LevelSelectionButtonManager : MonoBehaviour
     {
-        [Header("Spawn object prefab"), SerializeField] LevelSelectionButton prefab;
-        [Header("Where to spawn objects"), SerializeField] Transform spawnParent;
+        [Header("Spawn object prefab"), SerializeField]
+        LevelSelectionButton prefab;
+
+        [Header("Where to spawn objects"), SerializeField]
+        Transform spawnParent;
+
         public LevelScoresData[] levelScoresData;
         LevelSelectionButton[] _buttons;
 
@@ -26,13 +30,11 @@ namespace Runtime.Managers
             levelScoresData = data;
             _buttons = new LevelSelectionButton[data.Length];
 
-            for (int i = 0; i < data.Length; i++)  //sorun burda
+            for (int i = 0; i < data.Length; i++)
             {
                 _buttons[i] = Instantiate(prefab, spawnParent);
                 _buttons[i].Prepare(data[i]);
-                
             }
         }
     }
 }
-   

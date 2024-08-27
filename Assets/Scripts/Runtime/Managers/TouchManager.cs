@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+
 public class TouchManager : MonoBehaviour
 {
     [SerializeField] Camera cam;
@@ -9,13 +10,11 @@ public class TouchManager : MonoBehaviour
     void Start()
     {
         _canTouch = false;
-        // StartCoroutine(WaitForTouch_Cor());
     }
 
     void Update()
-    { 
+    {
         GetTouch(Input.mousePosition);
-        
     }
 
     void GetTouch(Vector3 pos)
@@ -37,12 +36,6 @@ public class TouchManager : MonoBehaviour
             }
         }
     }
-    
-    // IEnumerator WaitForTouch_Cor()
-    // {
-    //     yield return new WaitForSeconds(1.5f);
-    //     _canTouch = true;
-    // } 
 }
 
 public static class TouchEvents

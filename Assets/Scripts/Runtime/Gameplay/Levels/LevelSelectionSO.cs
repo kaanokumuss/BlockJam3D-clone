@@ -6,5 +6,5 @@ public class LevelSelectionSO : ScriptableObject
     public int levelIndex;
     public int score;
     public LevelData levelData;
-    public Material[] sphereMaterials; // Materiyaller için bir dizi ekliyoruz
+    public Material[] sphereMaterials;
 }

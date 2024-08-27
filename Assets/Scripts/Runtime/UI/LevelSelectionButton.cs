@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class LevelSelectionButton : MonoBehaviour
 {
-    
     [SerializeField] GameObject lockIcon, playText;
     [SerializeField] TextMeshProUGUI levelInfoText;
     [SerializeField] Button playButton;
@@ -15,6 +14,7 @@ public class LevelSelectionButton : MonoBehaviour
     {
         playButton.onClick.AddListener(OnClick);
     }
+
     private void OnDisable()
     {
         playButton.onClick.RemoveListener(OnClick);
@@ -24,17 +24,15 @@ public class LevelSelectionButton : MonoBehaviour
     {
         playButton.interactable = data.isUnlocked;
         _index = data.index;
-        // Debug.Log("Prepared");
+
         UpdateSprite(data.isUnlocked);
         UpdateInfoText(data);
     }
 
     void UpdateSprite(bool isUnlocked)
     {
-        
         lockIcon.SetActive(!isUnlocked);
         playText.SetActive(isUnlocked);
-       // Debug.Log($"Set Lock or Play");
     }
 
     void UpdateInfoText(LevelScoresData data)

@@ -4,14 +4,13 @@ using Random = UnityEngine.Random;
 
 public class SphereMaterialMixer : MonoBehaviour
 {
-    [SerializeField] private LevelSelectionSO levelSelectionSO; // ScriptableObject referansı
+    [SerializeField] private LevelSelectionSO levelSelectionSO;
 
     public void AssignMaterial(GameObject sphere, string materialName)
     {
         Renderer renderer = sphere.GetComponent<Renderer>();
         if (renderer != null && levelSelectionSO.sphereMaterials.Length > 0)
         {
-            // Material'ı isme göre bul
             Material material = System.Array.Find(levelSelectionSO.sphereMaterials, mat => mat.name == materialName);
             if (material != null)
             {
@@ -23,6 +22,4 @@ public class SphereMaterialMixer : MonoBehaviour
             }
         }
     }
-
-
 }

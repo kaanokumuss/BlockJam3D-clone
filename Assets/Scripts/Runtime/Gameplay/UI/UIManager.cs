@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject winPanel, failPanel , dangerPanel;
+    [SerializeField] private GameObject winPanel, failPanel, dangerPanel;
     [SerializeField] private GameObject Enviroments;
     [SerializeField] private Button Menu;
     [SerializeField] private GameObject MenuPanel;
@@ -23,33 +23,28 @@ public class UIManager : MonoBehaviour
         GameEvents.OnFail -= OpenFailPanel;
     }
 
-    
 
     private void OpenWinPanel()
     {
         winPanel.SetActive(true);
         Enviroments.SetActive(false);
-        StartCoroutine(HideFailPanelAfterDelay()); // Paneli belirli bir süre sonra kapatacak Coroutine'i başlat
+        StartCoroutine(HideFailPanelAfterDelay());
     }
 
     private void OpenFailPanel()
     {
         failPanel.SetActive(true);
         Enviroments.SetActive(false);
-        StartCoroutine(HideFailPanelAfterDelay()); // Paneli belirli bir süre sonra kapatacak Coroutine'i başlat
+        StartCoroutine(HideFailPanelAfterDelay());
     }
 
     private void OpenDanger()
     {
         dangerPanel.SetActive(true);
         Enviroments.SetActive(false);
-        StartCoroutine(HideFailPanelAfterDelay()); // Paneli belirli bir süre sonra kapatacak Coroutine'i başlat
+        StartCoroutine(HideFailPanelAfterDelay());
     }
 
-    private void OpenMenuPanel()
-    {
-        
-    }
 
     private IEnumerator HideFailPanelAfterDelay()
     {
@@ -59,6 +54,5 @@ public class UIManager : MonoBehaviour
         winPanel.SetActive(false);
         failPanel.SetActive(false);
         Enviroments.SetActive(true);
-
     }
 }

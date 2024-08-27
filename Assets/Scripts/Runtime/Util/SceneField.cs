@@ -5,7 +5,6 @@ namespace Runtime.SceneUtil
     [System.Serializable]
     public class SceneField : ISerializationCallbackReceiver
     {
-
 #if UNITY_EDITOR
         public UnityEditor.SceneAsset sceneAsset;
 #endif
@@ -17,7 +16,8 @@ namespace Runtime.SceneUtil
         public static implicit operator string(SceneField sceneField)
         {
 #if UNITY_EDITOR
-            return System.IO.Path.GetFileNameWithoutExtension(UnityEditor.AssetDatabase.GetAssetPath(sceneField.sceneAsset));
+            return System.IO.Path.GetFileNameWithoutExtension(
+                UnityEditor.AssetDatabase.GetAssetPath(sceneField.sceneAsset));
 #else
         return sceneField.sceneName;
 #endif
@@ -29,6 +29,9 @@ namespace Runtime.SceneUtil
             sceneName = this;
 #endif
         }
-        public void OnAfterDeserialize() { }
+
+        public void OnAfterDeserialize()
+        {
+        }
     }
 }

@@ -5,9 +5,11 @@ using UnityEngine.Serialization;
 
 public class LevelManager : MonoBehaviour
 {
-    [FormerlySerializedAs("LevelSelectionSo")] [SerializeField] private LevelSelectionSO LevelSelectionSO;
+    [FormerlySerializedAs("LevelSelectionSo")] [SerializeField]
+    private LevelSelectionSO LevelSelectionSO;
+
     [SerializeField] TextAsset[] levelFiles;
-    LevelData[] _levelData; 
+    LevelData[] _levelData;
     LevelSaveData _levelSaveData;
     [SerializeField] ScoreManager scoreManager;
     [SerializeField] private float delayBeforeLoadMetaScene = 5f; // Gecikme süresi
@@ -19,7 +21,7 @@ public class LevelManager : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
         LevelEvents.OnLevelSelected += LevelSelected;
         LevelEvents.OnLevelWin += Save_Callback;
-        LevelEvents.OnLevelDataNeeded += LevelDataNeeded_Callback; 
+        LevelEvents.OnLevelDataNeeded += LevelDataNeeded_Callback;
         GameEvents.OnWin += Win;
         GameEvents.OnFail += Fail;
     }
@@ -32,9 +34,10 @@ public class LevelManager : MonoBehaviour
         LevelEvents.OnLevelWin -= Save_Callback;
         LevelEvents.OnLevelDataNeeded -= LevelDataNeeded_Callback;
     }
+
     public void QuickPlay()
     {
-        LevelSelected(0);  // İlk seviyeyi seç ve oyunu başlat
+        LevelSelected(0); // İlk seviyeyi seç ve oyunu başlat
     }
 
     void LevelSelected(int index)
@@ -62,7 +65,7 @@ public class LevelManager : MonoBehaviour
         {
             _levelSaveData = DataHandler.Load<LevelSaveData>(DataKeys.LevelScoreDataKey);
         }
-        else 
+        else
         {
             _levelSaveData = new LevelSaveData(new LevelScoresData[_levelData.Length]);
 
@@ -76,11 +79,11 @@ public class LevelManager : MonoBehaviour
 
             _levelSaveData.Data[0].isUnlocked = true;
             _levelSaveData.Data[0].highScore = 0;
-         
+
             DataHandler.Save(_levelSaveData, DataKeys.LevelScoreDataKey);
         }
     }
-   
+
     void Save_Callback(CompleteData completeData)
     {
         _levelSaveData.Data[completeData.Index + 1].isUnlocked = true;
@@ -97,17 +100,17 @@ public class LevelManager : MonoBehaviour
     {
         Save_Callback(GetCompleteData());
         GameEvents.WinPanel?.Invoke();
-        StartCoroutine(LoadMetaSceneWithDelay()); // Gecikmeli olarak meta sahneye geçiş yap
+        StartCoroutine(LoadMetaSceneWithDelay());
     }
 
     private void Fail()
     {
-        StartCoroutine(LoadMetaSceneWithDelay()); // Gecikmeli olarak meta sahneye geçiş yap
+        StartCoroutine(LoadMetaSceneWithDelay());
     }
 
     private IEnumerator LoadMetaSceneWithDelay()
     {
-        yield return new WaitForSeconds(delayBeforeLoadMetaScene); // Belirli süre bekle
+        yield return new WaitForSeconds(delayBeforeLoadMetaScene);
         LoadMetaScene();
     }
 
@@ -117,10 +120,12 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogError("LevelSelectionSO is null in GetCompleteData.");
         }
+
         if (scoreManager == null)
         {
             Debug.LogError("scoreManager is null in GetCompleteData.");
         }
+
         return new CompleteData(LevelSelectionSO.levelIndex, scoreManager.score);
     }
 

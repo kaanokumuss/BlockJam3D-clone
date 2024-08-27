@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LevelsButton : MonoBehaviour
 {
     [SerializeField] Button button;
-    
+
     void OnEnable()
     {
         ClickMeAnimation();
@@ -24,10 +24,7 @@ public class LevelsButton : MonoBehaviour
             .Append(transform.DOPunchScale(Vector3.one * .15f, .5f).SetEase(Ease.InOutExpo))
             .AppendInterval(.3f)
             .SetLoops(-1, LoopType.Restart)
-            .OnKill(() =>
-            {
-                transform.localScale = Vector3.one;
-            })
+            .OnKill(() => { transform.localScale = Vector3.one; })
             .SetId(transform);
     }
 
@@ -43,5 +40,4 @@ public class LevelsButton : MonoBehaviour
         button = GetComponent<Button>();
     }
 #endif
-
 }

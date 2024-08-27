@@ -10,12 +10,12 @@ public class UndoButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI remainingAttemptsText; // TMP referansı
 
     private bool hasUndone = false;
-    [SerializeField] int remainingAttempts = 1; // Başlangıçta 1 hakkı var
+    [SerializeField] int remainingAttempts = 1; 
 
     private void OnEnable()
     {
         undoButton.onClick.AddListener(OnClick);
-        UpdateRemainingAttemptsText(); // TMP metnini güncelle
+        UpdateRemainingAttemptsText();
     }
 
     private void OnDisable()
@@ -29,8 +29,8 @@ public class UndoButton : MonoBehaviour
         {
             UndoLastMove();
             hasUndone = true;
-            remainingAttempts--; // Kalan hakkı bir azalt
-            UpdateRemainingAttemptsText(); // TMP metnini güncelle
+            remainingAttempts--; 
+            UpdateRemainingAttemptsText(); 
         }
     }
 
@@ -41,13 +41,10 @@ public class UndoButton : MonoBehaviour
             Sphere lastMovedSphere = submitManager.undoStack.Pop();
             Debug.Log("Popped");
 
-            // Move the sphere back and pass a callback to handle completion
             lastMovedSphere.MoveBack(() =>
             {
-                // Remove sphere from info list
                 submitManager.sphereInfos.RemoveAll(info => info.SphereObject == lastMovedSphere.gameObject);
                 submitManager.isCheckingForMatch = false;
-                // Trigger score event
                 matchManager.RearrangeSpheres();
                 ScoreEvents.OnTappedUndoButton?.Invoke();
             });

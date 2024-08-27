@@ -6,5 +6,5 @@ public class PlanetDataSO : ScriptableObject
     public string planetName;
     public Material planetMaterial;
     public Vector3 position;
-    public int[] childrenIDs; 
+    public int[] childrenIDs;
 }

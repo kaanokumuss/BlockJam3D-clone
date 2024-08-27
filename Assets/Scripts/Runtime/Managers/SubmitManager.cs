@@ -15,11 +15,10 @@ public class SubmitManager : MonoBehaviour
     public List<Sphere> sphereInfos = new List<Sphere>();
     public bool isCheckingForMatch = false;
     public float delay = 1f;
-    public Stack<Sphere> undoStack = new Stack<Sphere>(); 
+    public Stack<Sphere> undoStack = new Stack<Sphere>();
     private bool canTap = true; // Yeni değişken eklendi.
     public float rayLength = 3f;
     public string[] collisionTags;
-
 
 
     void OnEnable()
@@ -34,14 +33,14 @@ public class SubmitManager : MonoBehaviour
 
     void HandleElementTapped(ITouchable touchedElement)
     {
-        if (isCheckingForMatch || !canTap) return; // Check if currently processing or if tapping is allowed
+        if (isCheckingForMatch || !canTap) return;
 
         // Cast the element to a GameObject for raycasting
         GameObject touchedSphere = touchedElement.gameObject;
 
-        int collisionCount = CheckRaycastCollisions(touchedSphere); // Pass GameObject for collision check
+        int collisionCount = CheckRaycastCollisions(touchedSphere);
         isCheckingForMatch = true;
-        canTap = false; // Disable tap after touch
+        canTap = false;
 
         Renderer renderer = touchedSphere.GetComponent<Renderer>();
         if (renderer == null)
@@ -72,22 +71,20 @@ public class SubmitManager : MonoBehaviour
             }
             else
             {
-                GameEvents.FailPanel?.Invoke();                
-                Debug.LogError("No available index found for the color.");
+                GameEvents.FailPanel?.Invoke();
                 GameEvents.OnFail?.Invoke();
             }
-    
-            StartCoroutine(EnableTapAfterDelay(delay)); // Start delay before re-enabling tap
+
+            StartCoroutine(EnableTapAfterDelay(delay));
         }
         else
         {
             isCheckingForMatch = false;
-            canTap = true; // Enable tap if the collision count is 4 or more
+            canTap = true;
         }
     }
 
 
-    // Yeni Coroutine metodu eklendi.
     private IEnumerator EnableTapAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -103,7 +100,7 @@ public class SubmitManager : MonoBehaviour
             existingSphere.Index = index;
             existingSphere.Material = material;
             existingSphere.SphereObject = sphere;
-        
+
             sphereInfos.RemoveAll(info => info.SphereObject == sphere);
             sphereInfos.Add(existingSphere);
         }
@@ -112,6 +109,7 @@ public class SubmitManager : MonoBehaviour
             Debug.LogError("Sphere component not found on the provided GameObject.");
         }
     }
+
     private int CheckRaycastCollisions(GameObject touchedElement)
     {
         int tagCount = 0; // Initialize count
@@ -132,14 +130,9 @@ public class SubmitManager : MonoBehaviour
             {
                 Debug.Log("No hit detected in direction: " + direction);
             }
-
-           
         }
 
         Debug.Log("Total tags matched: " + tagCount);
         return tagCount;
     }
-   
-
-    
 }

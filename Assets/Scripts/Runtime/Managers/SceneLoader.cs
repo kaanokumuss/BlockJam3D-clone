@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    [Header("Scene Assets")]
-    [SerializeField] LevelAssetSO metaSceneAsset;
+    [Header("Scene Assets")] [SerializeField]
+    LevelAssetSO metaSceneAsset;
+
     [SerializeField] LevelAssetSO gameSceneAsset;
 
     AsyncOperation _asyncOperation = new();
@@ -31,13 +32,13 @@ public class SceneLoader : MonoBehaviour
     {
         StartCoroutine(LoadSceneAdditive(metaSceneAsset.Asset));
     }
-    
+
     [Button]
     void ReloadGameScene()
     {
         StartCoroutine(UnloadActiveSceneThenLoadScene(SceneManager.GetActiveScene().name));
     }
-    
+
     [Button]
     void LoadGameScene()
     {
@@ -61,7 +62,7 @@ public class SceneLoader : MonoBehaviour
         _asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         _asyncOperation.allowSceneActivation = true;
 
-        yield return new WaitUntil(()=> _asyncOperation.isDone);
+        yield return new WaitUntil(() => _asyncOperation.isDone);
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
     }
@@ -70,6 +71,6 @@ public class SceneLoader : MonoBehaviour
     {
         _asyncOperation = SceneManager.UnloadSceneAsync(sceneName);
 
-        yield return new WaitUntil(()=> _asyncOperation.isDone);
+        yield return new WaitUntil(() => _asyncOperation.isDone);
     }
 }

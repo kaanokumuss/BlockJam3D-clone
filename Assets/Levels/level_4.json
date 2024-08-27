@@ -19,8 +19,8 @@
         "y": 1,
         "z": 12.6
       },
-      "planet": "Earth",
-      "material": "Earth",
+      "planet": "Lava",
+      "material": "Lava",
       "children": [4, 7, 10]
     },
     {
@@ -30,8 +30,8 @@
         "y": 1,
         "z": 12.6
       },
-      "planet": "Lava",
-      "material": "Lava",
+      "planet": "Venus",
+      "material": "Venus",
       "children": [5, 8, 11]
     },
     {
@@ -63,8 +63,8 @@
         "y": 1,
         "z": 15.6
       },
-      "planet": "Earth",
-      "material": "Earth",
+      "planet": "Lava",
+      "material": "Lava",
       "children": [8, 11]
     },
     {
@@ -74,8 +74,8 @@
         "y": 1,
         "z": 18.6
       },
-      "planet": "Lava",
-      "material": "Lava",
+      "planet": "Venus",
+      "material": "Venus",
       "children": [9]
     },
     {
@@ -107,8 +107,8 @@
         "y": 1,
         "z": 21.6
       },
-      "planet": "Earth",
-      "material": "Earth",
+      "planet": "Lava",
+      "material": "Lava",
       "children": []
     },
     {
@@ -118,8 +118,8 @@
         "y": 1,
         "z": 21.6
       },
-      "planet": "Lava",
-      "material": "Lava",
+      "planet": "Venus",
+      "material": "Venus",
       "children": []
     },
     {
